@@ -9,7 +9,7 @@ import { Pedido } from '../../../models/pedido';
   templateUrl: './pedidolist.component.html',
   styleUrl: './pedidolist.component.scss',
 })
-export class PedidoslistComponent {
+export class PedidolistComponent {
   pedidoService = inject(PedidoService);
   pedidos: Pedido[] = [];
 
