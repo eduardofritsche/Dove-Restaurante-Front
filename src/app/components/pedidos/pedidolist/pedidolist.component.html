@@ -1,1 +1,45 @@
-<p>pedidolist works!</p>
+<div class="container">
+  <h1>Listagem de Pedidos</h1>
+  <br />
+  <button class="btn btn-primary" routerLink="/pedidos/new">Novo</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marmita</th>
+        <th>Status</th>
+        <th>Hora Início</th>
+        <th>Hora Fim</th>
+        <th>Cliente</th>
+        <th>Funcionário</th>
+        <th>Cardápio</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (pedido of pedidos; track pedido.id){
+      <tr>
+        <td>
+          <a href="" routerLink="/pedidos/{{ pedido.id }}">{{ pedido.id }}</a>
+        </td>
+        <td>{{ pedido.marmita }}</td>
+        <td>{{ pedido.status }}</td>
+        <td>{{ pedido.hora_inicio }}</td>
+        <td>{{ pedido.hora_fim }}</td>
+        <td>{{ pedido.cliente?.nome }}</td>
+        <td>{{ pedido.funcionario?.nome }}</td>
+        <td>{{ pedido.cardapio?.data }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deletar(pedido.id)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
