@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form (ngSubmit)="salvar(cardapio)">
+        <div class="mb-3">
+          <label for="data" class="form-label">Data</label>
+          <input
+            id="data"
+            type="date"
+            class="form-control"
+            [(ngModel)]="cardapio.data"
+            name="data"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="pedidos" class="form-label">Quantidade de Pedidos</label>
+          <input
+            id="pedidos"
+            type="text"
+            class="form-control"
+            [value]="cardapio.pedidos.length || 0"
+            name="pedidos"
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="ingredientes" class="form-label"
+            >Quantidade de Ingredientes</label
+          >
+          <input
+            id="ingredientes"
+            type="text"
+            class="form-control"
+            [value]="cardapio.ingredientes.length || 0"
+            name="ingredientes"
+            disabled
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+    </div>
+  </div>
+</div>
