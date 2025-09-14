@@ -40,6 +40,14 @@ export class AuthService {
     return this.user;
   }
 
+  isFuncionario(): boolean {
+    return this.getRole() === 'FUNCIONARIO';
+  }
+
+  isCliente(): boolean {
+    return this.getRole() === 'CLIENTE';
+  }
+
   isLoggedIn(): boolean {
     return this.user !== null;
   }

@@ -32,7 +32,7 @@ export class LoginClienteComponent {
             confirmButtonText: 'Ok',
           });
 
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/cliente/pedidos']);
         } else {
           Swal.fire({
             title: 'Senha incorreta!',

@@ -22,12 +22,14 @@ export class LoginfuncionarioComponent {
     this.funcionarioService.findByCpf(this.cpf).subscribe({
       next: (funcionario: Funcionario | null) => {
         if (funcionario) {
+          this.authService.setRole('FUNCIONARIO');
+          this.authService.setUser(funcionario);
           Swal.fire({
             title: 'Login realizado com sucesso!',
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/pedidos']);
         } else {
           Swal.fire({
             title: 'CPF incorreto',
