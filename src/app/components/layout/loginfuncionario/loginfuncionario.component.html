@@ -1,0 +1,31 @@
+<div class="container mt-5" style="max-width: 400px">
+  <div class="card shadow">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Login Funcionário</h3>
+
+      <form (ngSubmit)="loginFuncionario()">
+        <div class="mb-3">
+          <label for="cpf" class="form-label">CPF</label>
+          <input
+            id="cpf"
+            type="text"
+            class="form-control"
+            [(ngModel)]="cpf"
+            name="cpf"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+      </form>
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary w-100"
+        (click)="voltarLoginCliente()"
+      >
+        Login Cliente
+      </button>
+    </div>
+  </div>
+</div>

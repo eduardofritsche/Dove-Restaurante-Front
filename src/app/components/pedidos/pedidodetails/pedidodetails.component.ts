@@ -45,7 +45,7 @@ export class PedidodetailsComponent {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/pedidos']);
+          this.router.navigate(['/admin/pedidos']);
         },
         error: (erro) => {
           console.error(erro);
@@ -60,7 +60,7 @@ export class PedidodetailsComponent {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/pedidos']);
+          this.router.navigate(['/admin/pedidos']);
         },
         error: (erro) => {
           console.error(erro);
