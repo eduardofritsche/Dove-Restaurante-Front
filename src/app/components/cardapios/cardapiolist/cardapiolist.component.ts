@@ -21,7 +21,10 @@ export class CardapiolistComponent {
   findAll() {
     this.cardapioService.findAll().subscribe({
       next: (cardapios) => {
-        this.cardapios = cardapios;
+        // Ordena por data decrescente
+        this.cardapios = cardapios.sort(
+          (a, b) => new Date(b.data).getTime() - new Date(a.data).getTime()
+        );
       },
       error: (error) => {
         console.error(error);
