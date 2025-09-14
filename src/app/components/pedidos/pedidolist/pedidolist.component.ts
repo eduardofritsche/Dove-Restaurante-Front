@@ -20,7 +20,7 @@ export class PedidolistComponent {
   findAll() {
     this.pedidoService.findAll().subscribe({
       next: (pedidos) => {
-        this.pedidos = pedidos;
+        this.pedidos = pedidos.sort((a, b) => b.id - a.id);
       },
       error: (error) => {
         console.error(error);
@@ -28,7 +28,9 @@ export class PedidolistComponent {
     });
   }
 
-  deletar(id: number) {
+  deletar(pedido: Pedido) {
+    if (pedido.status === 'FINALIZADO') return;
+
     Swal.fire({
       title: 'Você tem certeza que deseja deletar o pedido?',
       icon: 'warning',
@@ -38,7 +40,7 @@ export class PedidolistComponent {
       denyButtonText: 'Não',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.pedidoService.deleteById(id).subscribe({
+        this.pedidoService.deleteById(pedido.id).subscribe({
           next: () => {
             this.findAll();
             Swal.fire({
@@ -57,5 +59,15 @@ export class PedidolistComponent {
         });
       }
     });
+  }
+
+  podeEditar(pedido: Pedido): boolean {
+    return pedido.status !== 'FINALIZADO';
+  }
+
+  getStatusIcon(pedido: Pedido) {
+    if (pedido.status.toLowerCase() === 'finalizado') return '✅';
+    if (pedido.status.toLowerCase() === 'preparando') return '⏱️';
+    return '';
   }
 }

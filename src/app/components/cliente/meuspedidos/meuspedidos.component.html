@@ -1,1 +1,56 @@
-<p>meuspedidos works!</p>
+<div class="container">
+  <h1>Meus Pedidos</h1>
+  <br />
+  <button class="btn btn-primary mb-3" [routerLink]="['/admin/pedidos', 'new']">
+    Novo Pedido
+  </button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marmita</th>
+        <th>Status</th>
+        <th>Hora Início</th>
+        <th>Hora Fim</th>
+        <th>Cardápio</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (pedido of pedidos; track pedido.id) {
+      <tr>
+        <td>{{ pedido.id }}</td>
+        <td>{{ pedido.marmita }}</td>
+        <td>{{ pedido.status }} {{ getStatusIcon(pedido) }}</td>
+        <td>{{ pedido.hora_inicio }}</td>
+        <td>{{ pedido.hora_fim }}</td>
+        <td>{{ pedido.cardapio.data }}</td>
+        <td>
+          <!-- Botão editar apenas se não finalizado -->
+          @if (podeEditar(pedido)) {
+          <button
+            type="button"
+            class="btn btn-info me-2"
+            [routerLink]="['/cliente/pedidos/edit', pedido.id]"
+          >
+            Editar
+          </button>
+          }
+
+          <!-- Botão excluir apenas se não finalizado -->
+          @if (podeEditar(pedido)) {
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deletar(pedido)"
+          >
+            Excluir
+          </button>
+          }
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

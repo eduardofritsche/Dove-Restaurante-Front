@@ -2,9 +2,10 @@
   <h1>Listagem de Pedidos</h1>
   <br />
   <button class="btn btn-primary" [routerLink]="['/admin/pedidos', 'new']">
-    Novo
+    Novo Pedido
   </button>
-  <table class="table table-striped">
+
+  <table class="table table-striped mt-3">
     <thead>
       <tr>
         <th>ID</th>
@@ -19,31 +20,34 @@
       </tr>
     </thead>
     <tbody>
-      @for (pedido of pedidos; track pedido.id){
+      @for (pedido of pedidos; track pedido.id) {
       <tr>
         <td>{{ pedido.id }}</td>
         <td>{{ pedido.marmita }}</td>
-        <td>{{ pedido.status }}</td>
+
+        <!-- Status com ícone -->
+        <td>{{ pedido.status }} {{ getStatusIcon(pedido) }}</td>
         <td>{{ pedido.hora_inicio }}</td>
         <td>{{ pedido.hora_fim }}</td>
-        <td>{{ pedido.cliente.id }}</td>
-        <td>{{ pedido.funcionario.id }}</td>
-        <td>{{ pedido.cardapio.id }}</td>
+        <td>{{ pedido.cliente.nome }}</td>
+        <td>{{ pedido.funcionario.nome }}</td>
+        <td>{{ pedido.cardapio.data }}</td>
+
         <td>
-          <!-- Botão Detalhes -->
+          <!-- Botão Editar -->
           <button
-            type="button"
             class="btn btn-info me-2"
-            [routerLink]="['/admin/pedidos/edit', pedido.id]"
+            [routerLink]="['/admin/pedidos', pedido.id, 'edit']"
+            [disabled]="!podeEditar(pedido)"
           >
             Editar
           </button>
 
           <!-- Botão Excluir -->
           <button
-            type="button"
             class="btn btn-danger"
-            (click)="deletar(pedido.id)"
+            (click)="deletar(pedido)"
+            [disabled]="!podeEditar(pedido)"
           >
             Excluir
           </button>

@@ -32,6 +32,8 @@ export const routes: Routes = [
     children: [
       // Área do cliente
       { path: 'cliente/pedidos', component: MeuspedidosComponent },
+      { path: 'cliente/pedidos/new', component: PedidodetailsComponent },
+      { path: 'cliente/pedidos/edit/:id', component: PedidodetailsComponent },
       { path: 'cliente/perfil', component: PerfilclienteComponent },
 
       // Área do funcionário (admin)
