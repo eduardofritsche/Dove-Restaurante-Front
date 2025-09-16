@@ -28,7 +28,7 @@ export class MeuspedidosComponent {
       next: (pedidos) => {
         // filtra apenas pedidos do cliente
         this.pedidos = pedidos
-          .filter((p) => p.cliente.id === clienteId)
+          .filter((p) => p.cliente?.id === clienteId)
           .sort((a, b) => {
             // Ordena pelo mais recente (hora_inicio mais nova primeiro)
             const dateA = new Date(a.hora_inicio ?? '');
