@@ -29,15 +29,15 @@
         <td>{{ pedido.status }} {{ getStatusIcon(pedido) }}</td>
         <td>{{ pedido.hora_inicio }}</td>
         <td>{{ pedido.hora_fim }}</td>
-        <td>{{ pedido.cliente.nome }}</td>
-        <td>{{ pedido.funcionario.nome }}</td>
+        <td>{{ pedido.cliente?.nome }}</td>
+        <td>{{ pedido.funcionario?.nome }}</td>
         <td>{{ pedido.cardapio.data }}</td>
 
         <td>
           <!-- Botão Editar -->
           <button
             class="btn btn-info me-2"
-            [routerLink]="['/admin/pedidos', pedido.id, 'edit']"
+            [routerLink]="['/admin/pedidos/edit', pedido.id]"
             [disabled]="!podeEditar(pedido)"
           >
             Editar

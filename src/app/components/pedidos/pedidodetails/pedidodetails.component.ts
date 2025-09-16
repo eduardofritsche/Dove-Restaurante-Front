@@ -4,6 +4,11 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Pedido } from '../../../models/pedido';
 import { PedidoService } from '../../../services/pedido.service';
+import { CardapioService } from '../../../services/cardapio.service';
+import { IngredienteService } from '../../../services/ingrediente.service';
+import { Cardapio } from '../../../models/cardapio';
+import { Ingrediente } from '../../../models/ingrediente';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-pedidodetails',
@@ -13,15 +18,53 @@ import { PedidoService } from '../../../services/pedido.service';
 })
 export class PedidodetailsComponent {
   pedido: Pedido = new Pedido();
+  ingredientes: Ingrediente[] = [];
+
   pedidoService = inject(PedidoService);
+  cardapioService = inject(CardapioService);
+  ingredienteService = inject(IngredienteService);
+  authService = inject(AuthService);
   activedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
   constructor() {
     const id = this.activedRoute.snapshot.params['id'];
-    if (id > 0) {
+    if (id) {
       this.findById(id);
+    } else {
+      // cadastro novo
+      this.prepareNewPedido();
     }
+
+    // carregar ingredientes disponíveis
+    this.ingredienteService.findAll().subscribe({
+      next: (ings) => (this.ingredientes = ings),
+      error: (err) => console.error(err),
+    });
+  }
+
+  private prepareNewPedido() {
+    // status padrão
+    this.pedido.status = 'PREPARANDO';
+
+    // pegar usuário autenticado
+    const user = this.authService.getUser();
+
+    if (this.authService.isCliente() && user && 'email' in user) {
+      // Aqui garantimos que é Cliente
+      this.pedido.cliente = user;
+    } else if (this.authService.isFuncionario() && user && !('email' in user)) {
+      // Aqui garantimos que é Funcionario
+      this.pedido.funcionario = user;
+    }
+
+    // pegar cardápio do dia
+    this.cardapioService.getCardapioDoDia().subscribe({
+      next: (cardapio: Cardapio) => {
+        this.pedido.cardapio = cardapio;
+      },
+      error: (err) => console.error('Erro ao buscar cardápio do dia', err),
+    });
   }
 
   findById(id: number) {
@@ -29,43 +72,54 @@ export class PedidodetailsComponent {
       next: (pedido) => {
         this.pedido = pedido;
       },
-      error: (erro) => {
-        console.error(erro);
-      },
+      error: (erro) => console.error(erro),
     });
   }
 
   salvar(pedido: Pedido) {
-    if (pedido.id == null) {
-      // criar pedido
-      this.pedidoService.save(pedido).subscribe({
-        next: () => {
-          Swal.fire({
-            title: 'Salvo com Sucesso!',
-            icon: 'success',
-            confirmButtonText: 'Ok',
-          });
-          this.router.navigate(['/admin/pedidos']);
-        },
-        error: (erro) => {
-          console.error(erro);
-        },
-      });
-    } else {
-      // editar pedido
-      this.pedidoService.update(pedido).subscribe({
-        next: () => {
-          Swal.fire({
-            title: 'Editado com Sucesso!',
-            icon: 'success',
-            confirmButtonText: 'Ok',
-          });
-          this.router.navigate(['/admin/pedidos']);
-        },
-        error: (erro) => {
-          console.error(erro);
-        },
-      });
+    // hora de início só na criação
+    if (!pedido.id) {
+      pedido.hora_inicio = new Date().toISOString().substring(11, 16); // formato HH:mm
     }
+
+    const salvarObs = pedido.id
+      ? this.pedidoService.update(pedido)
+      : this.pedidoService.save(pedido);
+
+    salvarObs.subscribe({
+      next: () => {
+        Swal.fire({
+          title: pedido.id ? 'Editado com Sucesso!' : 'Salvo com Sucesso!',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        }).then(() => {
+          if (this.authService.isFuncionario()) {
+            this.router.navigate(['/admin/pedidos']);
+          } else if (this.authService.isCliente()) {
+            this.router.navigate(['/cliente/pedidos']);
+          } else {
+            // fallback caso não seja nenhum (ex: erro de autenticação)
+            this.router.navigate(['/']);
+          }
+        });
+      },
+      error: (erro) => console.error(erro),
+    });
+  }
+
+  // Função para marcar/desmarcar ingredientes
+  toggleIngrediente(ing: Ingrediente, event: any) {
+    if (event.target.checked) {
+      this.pedido.ingredientes.push(ing);
+    } else {
+      this.pedido.ingredientes = this.pedido.ingredientes.filter(
+        (i) => i.id !== ing.id
+      );
+    }
+  }
+
+  // verificar se já está selecionado
+  isChecked(ing: Ingrediente): boolean {
+    return this.pedido.ingredientes.some((i) => i.id === ing.id);
   }
 }

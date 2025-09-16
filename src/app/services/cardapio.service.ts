@@ -30,5 +30,9 @@ export class CardapioService {
     return this.http.post<Cardapio>(this.API, cardapio);
   }
 
+  getCardapioDoDia(): Observable<Cardapio> {
+    return this.http.get<Cardapio>(`${this.API}/hoje`);
+  }
+
   constructor() {}
 }

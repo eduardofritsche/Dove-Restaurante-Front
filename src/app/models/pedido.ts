@@ -10,7 +10,9 @@ export class Pedido {
   hora_inicio!: string;
   hora_fim!: string;
   cardapio!: Cardapio;
-  funcionario!: Funcionario;
-  cliente!: Cliente;
+  // funcionario!: Funcionario;
+  // cliente!: Cliente;
+  funcionario?: Funcionario | null;
+  cliente?: Cliente | null;
   ingredientes: Ingrediente[] = [];
 }
