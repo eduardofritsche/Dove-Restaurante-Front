@@ -35,12 +35,6 @@ export class PedidodetailsComponent {
       // cadastro novo
       this.prepareNewPedido();
     }
-
-    // carregar ingredientes disponíveis
-    this.ingredienteService.findAll().subscribe({
-      next: (ings) => (this.ingredientes = ings),
-      error: (err) => console.error(err),
-    });
   }
 
   private prepareNewPedido() {
@@ -51,10 +45,10 @@ export class PedidodetailsComponent {
     const user = this.authService.getUser();
 
     if (this.authService.isCliente() && user && 'email' in user) {
-      // Aqui garantimos que é Cliente
+      // Garantimos que é Cliente
       this.pedido.cliente = user;
-    } else if (this.authService.isFuncionario() && user && !('email' in user)) {
-      // Aqui garantimos que é Funcionario
+    } else if (this.authService.isFuncionario() && user && 'cpf' in user) {
+      // Garantimos que é Funcionário
       this.pedido.funcionario = user;
     }
 
@@ -62,6 +56,9 @@ export class PedidodetailsComponent {
     this.cardapioService.getCardapioDoDia().subscribe({
       next: (cardapio: Cardapio) => {
         this.pedido.cardapio = cardapio;
+
+        // ingredientes do cardápio do dia
+        this.ingredientes = cardapio.ingredientes ?? [];
       },
       error: (err) => console.error('Erro ao buscar cardápio do dia', err),
     });
@@ -71,8 +68,21 @@ export class PedidodetailsComponent {
     this.pedidoService.findById(id).subscribe({
       next: (pedido) => {
         this.pedido = pedido;
+        this.pedido.ingredientes = this.pedido.ingredientes ?? [];
+
+        if (pedido.cardapio?.id) {
+          // Buscar o cardápio completo (com ingredientes)
+          this.cardapioService.findById(pedido.cardapio.id).subscribe({
+            next: (cardapio) => {
+              this.pedido.cardapio = cardapio;
+              this.ingredientes = cardapio.ingredientes; // todos os ingredientes
+            },
+            error: (err) =>
+              console.error('Erro ao carregar cardápio do pedido', err),
+          });
+        }
       },
-      error: (erro) => console.error(erro),
+      error: (erro) => console.error('Erro ao buscar pedido', erro),
     });
   }
 
