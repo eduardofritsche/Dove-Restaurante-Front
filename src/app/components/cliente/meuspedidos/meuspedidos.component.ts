@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Pedido } from '../../../models/pedido';
 import { PedidoService } from '../../../services/pedido.service';
+import { Cardapio } from '../../../models/cardapio';
+import { CardapioService } from '../../../services/cardapio.service';
 import { AuthService } from '../../../services/auth.service';
 import { RouterLink } from '@angular/router';
 
@@ -14,10 +16,25 @@ import { RouterLink } from '@angular/router';
 export class MeuspedidosComponent {
   pedidoService = inject(PedidoService);
   authService = inject(AuthService);
+  cardapioService = inject(CardapioService);
+  cardapioDoDia: Cardapio | null = null;
   pedidos: Pedido[] = [];
 
   ngOnInit(): void {
     this.findPedidosCliente();
+    this.carregarCardapioDoDia();
+  }
+
+  carregarCardapioDoDia() {
+    this.cardapioService.getCardapioDoDia().subscribe({
+      next: (cardapio) => {
+        this.cardapioDoDia = cardapio;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar cardápio do dia', err);
+        this.cardapioDoDia = null;
+      },
+    });
   }
 
   findPedidosCliente() {
@@ -26,15 +43,10 @@ export class MeuspedidosComponent {
 
     this.pedidoService.findAll().subscribe({
       next: (pedidos) => {
-        // filtra apenas pedidos do cliente
+        // filtra apenas pedidos do cliente e ordena por ID decrescente
         this.pedidos = pedidos
           .filter((p) => p.cliente?.id === clienteId)
-          .sort((a, b) => {
-            // Ordena pelo mais recente (hora_inicio mais nova primeiro)
-            const dateA = new Date(a.hora_inicio ?? '');
-            const dateB = new Date(b.hora_inicio ?? '');
-            return dateB.getTime() - dateA.getTime();
-          });
+          .sort((a, b) => b.id - a.id);
       },
       error: (erro) => console.error(erro),
     });

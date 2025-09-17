@@ -4,6 +4,7 @@
   <button
     class="btn btn-primary mb-3"
     [routerLink]="['/cliente/pedidos', 'new']"
+    [disabled]="!cardapioDoDia"
   >
     Novo Pedido
   </button>
@@ -30,27 +31,23 @@
         <td>{{ pedido.hora_fim }}</td>
         <td>{{ pedido.cardapio.data }}</td>
         <td>
-          <!-- Botão editar apenas se não finalizado -->
-          @if (podeEditar(pedido)) {
+          <!-- Botão Editar -->
           <button
-            type="button"
             class="btn btn-info me-2"
             [routerLink]="['/cliente/pedidos/edit', pedido.id]"
+            [disabled]="!podeEditar(pedido)"
           >
             Editar
           </button>
-          }
 
-          <!-- Botão excluir apenas se não finalizado -->
-          @if (podeEditar(pedido)) {
+          <!-- Botão Excluir -->
           <button
-            type="button"
             class="btn btn-danger"
             (click)="deletar(pedido)"
+            [disabled]="!podeEditar(pedido)"
           >
             Excluir
           </button>
-          }
         </td>
       </tr>
       }

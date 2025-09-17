@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PedidoService } from '../../../services/pedido.service';
+import { CardapioService } from '../../../services/cardapio.service';
 import { Pedido } from '../../../models/pedido';
+import { Cardapio } from '../../../models/cardapio';
 @Component({
   selector: 'app-pedidolist',
   imports: [RouterLink],
@@ -11,10 +13,25 @@ import { Pedido } from '../../../models/pedido';
 })
 export class PedidolistComponent {
   pedidoService = inject(PedidoService);
+  cardapioService = inject(CardapioService);
   pedidos: Pedido[] = [];
+  cardapioDoDia: Cardapio | null = null;
 
   ngOnInit(): void {
     this.findAll();
+    this.carregarCardapioDoDia();
+  }
+
+  carregarCardapioDoDia() {
+    this.cardapioService.getCardapioDoDia().subscribe({
+      next: (cardapio) => {
+        this.cardapioDoDia = cardapio;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar cardápio do dia', err);
+        this.cardapioDoDia = null;
+      },
+    });
   }
 
   findAll() {
@@ -69,5 +86,35 @@ export class PedidolistComponent {
     if (pedido.status.toLowerCase() === 'finalizado') return '✅';
     if (pedido.status.toLowerCase() === 'preparando') return '⏱️';
     return '';
+  }
+
+  markAsPronto(pedido: Pedido) {
+    if (pedido.status === 'FINALIZADO') {
+      return; // não faz nada se já estiver finalizado
+    }
+
+    // altera o status e define a hora_fim
+    pedido.status = 'FINALIZADO';
+    pedido.hora_fim = new Date().toLocaleTimeString(); // define hora fim como a hora atual
+
+    // atualiza no backend
+    this.pedidoService.update(pedido).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Pedido marcado como pronto!',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+        this.findAll(); // atualiza a lista
+      },
+      error: (erro) => {
+        Swal.fire({
+          title: 'Erro ao atualizar pedido',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+        console.error(erro);
+      },
+    });
   }
 }

@@ -1,7 +1,11 @@
 <div class="container">
   <h1>Listagem de Pedidos</h1>
   <br />
-  <button class="btn btn-primary" [routerLink]="['/admin/pedidos', 'new']">
+  <button
+    class="btn btn-primary"
+    [routerLink]="['/admin/pedidos', 'new']"
+    [disabled]="!cardapioDoDia"
+  >
     Novo Pedido
   </button>
 
@@ -41,6 +45,16 @@
             [disabled]="!podeEditar(pedido)"
           >
             Editar
+          </button>
+
+          <!-- Botão Pronto -->
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            [disabled]="pedido.status === 'FINALIZADO'"
+            (click)="markAsPronto(pedido)"
+          >
+            Pronto
           </button>
 
           <!-- Botão Excluir -->
