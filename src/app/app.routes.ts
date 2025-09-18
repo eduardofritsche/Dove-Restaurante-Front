@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 // Imports dos componentes de login e cadastro
 import { LoginClienteComponent } from './components/layout/logincliente/logincliente.component';
 import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
-// import { CadastroclienteComponent } from './components/cadastro/cadastrocliente/cadastrocliente.component';
+import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
 
 // Imports área do cliente
 import { MeuspedidosComponent } from './components/cliente/meuspedidos/meuspedidos.component';
@@ -23,7 +23,7 @@ export const routes: Routes = [
   // 🔹 Login / Cadastro
   { path: 'login-cliente', component: LoginClienteComponent },
   { path: 'login-funcionario', component: LoginfuncionarioComponent },
-  // { path: 'cadastro-cliente', component: CadastroclienteComponent },
+  { path: 'cadastro-cliente', component: CadastroclienteComponent },
 
   // Layout principal
   {

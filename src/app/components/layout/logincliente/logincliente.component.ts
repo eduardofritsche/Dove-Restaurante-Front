@@ -52,7 +52,7 @@ export class LoginClienteComponent {
   }
 
   abrirCadastro() {
-    this.router.navigate(['/cliente/cadastro']);
+    this.router.navigate(['/cadastro-cliente']);
   }
 
   abrirLoginFuncionario() {
