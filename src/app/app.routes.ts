@@ -15,6 +15,11 @@ import { PedidolistComponent } from './components/pedidos/pedidolist/pedidolist.
 import { PrincipalComponent } from './components/layout/principal/principal.component';
 import { CardapiodetailsComponent } from './components/cardapios/cardapiodetails/cardapiodetails.component';
 import { PedidodetailsComponent } from './components/pedidos/pedidodetails/pedidodetails.component';
+import { FuncionariolistComponent } from './components/funcionario/funcionariolist/funcionariolist.component';
+import { FuncionarioDetailsComponent } from './components/funcionario/funcionariodetails/funcionariodetails.component';
+import { FuncionarioRelatorioComponent } from './components/funcionario/funcionario-relatorio/funcionario-relatorio.component';
+import { IngredientelistComponent } from './components/ingrediente/ingredientelist/ingredientelist.component';
+import { IngredienteDetailsComponent } from './components/ingrediente/ingredientedetails/ingredientedetails.component';
 
 export const routes: Routes = [
   // Rota padrão → login cliente
@@ -38,14 +43,19 @@ export const routes: Routes = [
 
       // Área do funcionário (admin)
       // { path: 'admin/clientes', component: ClientelistComponent },
-      // { path: 'admin/funcionarios', component: FuncionariolistComponent },
+      { path: 'admin/funcionarios', component: FuncionariolistComponent },
+      { path: 'admin/funcionarios/new', component: FuncionarioDetailsComponent },
+      { path: 'admin/funcionarios/:id/edit', component: FuncionarioDetailsComponent },
+      { path: 'admin/funcionarios/:id/relatorio', component: FuncionarioRelatorioComponent },
       { path: 'admin/cardapios', component: CardapiolistComponent },
       { path: 'admin/cardapios/new', component: CardapiodetailsComponent },
       { path: 'admin/cardapios/edit/:id', component: CardapiodetailsComponent },
       { path: 'admin/pedidos', component: PedidolistComponent },
       { path: 'admin/pedidos/new', component: PedidodetailsComponent },
       { path: 'admin/pedidos/edit/:id', component: PedidodetailsComponent },
-      // { path: 'admin/ingredientes', component: IngredientelistComponent },
+      { path: 'admin/ingredientes', component: IngredientelistComponent },
+      { path: 'admin/ingredientes/new', component: IngredienteDetailsComponent },
+      { path: 'admin/ingredientes/:id/edit', component: IngredienteDetailsComponent },
 
       // Redirecionamento padrão dentro do layout
       { path: '', redirectTo: 'login-cliente', pathMatch: 'full' },

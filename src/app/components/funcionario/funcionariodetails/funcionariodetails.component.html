@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">
+        {{ funcionario.id ? 'Editar Funcionário' : 'Novo Funcionário' }}
+      </h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="salvar()">
+        <!-- Nome -->
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            id="nome"
+            type="text"
+            class="form-control"
+            [(ngModel)]="funcionario.nome"
+            name="nome"
+            required
+          />
+        </div>
+
+        <!-- CPF -->
+        <div class="mb-3">
+          <label for="cpf" class="form-label">CPF</label>
+          <input
+            id="cpf"
+            type="text"
+            class="form-control"
+            [(ngModel)]="funcionario.cpf"
+            name="cpf"
+            required
+          />
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="router.navigate(['/admin/funcionarios'])">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            {{ funcionario.id ? 'Salvar Alterações' : 'Cadastrar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

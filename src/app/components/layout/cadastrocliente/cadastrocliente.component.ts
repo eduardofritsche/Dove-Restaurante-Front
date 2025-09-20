@@ -2,9 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { ClienteService } from '../../../services/cliente.service';
+import { Cliente } from '../../../models/cliente';
 
 @Component({
   selector: 'app-cadastrocliente',
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './cadastrocliente.component.html',
   styleUrls: ['./cadastrocliente.component.scss']
 })
@@ -15,7 +21,7 @@ export class CadastroclienteComponent {
   confirmarSenha: string = '';
 
   constructor(
-    private router: Router
+    private router: Router,
     private clienteService: ClienteService,
     private authService: AuthService
   ) {}

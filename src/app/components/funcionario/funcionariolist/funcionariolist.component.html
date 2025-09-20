@@ -1,0 +1,76 @@
+<div class="container">
+  <h1>Listagem de Funcionários</h1>
+  <br />
+  <button class="btn btn-primary" [routerLink]="['/admin/funcionarios', 'new']">
+    Novo Funcionário
+  </button>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (funcionario of funcionarios; track funcionario.id) {
+      <tr>
+        <td>{{ funcionario.id }}</td>
+        <td>{{ funcionario.nome }}</td>
+        <td>{{ funcionario.cpf }}</td>
+        <td>
+          <!-- Editar -->
+          <button
+            class="btn btn-info me-2"
+            [routerLink]="['/admin/funcionarios', funcionario.id, 'edit']"
+          >
+            Editar
+          </button>
+
+          <!-- Excluir -->
+          <button
+            class="btn btn-danger me-2"
+            (click)="deletar(funcionario)"
+          >
+            Excluir
+          </button>
+
+          <!-- Relatório -->
+          <button class="btn btn-success" [routerLink]="['/admin/funcionarios', funcionario.id, 'relatorio']">
+          Relatório De Pedidos
+          </button>
+
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Relatório listado abaixo -->
+  @if (relatorio) {
+  <div class="mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h5>Relatório de Pedidos</h5>
+        <p><strong>Funcionário:</strong> {{ relatorio.funcionarioNome }} (CPF: {{ relatorio.funcionarioCpf }})</p>
+        <p><strong>Total de pedidos:</strong> {{ relatorio.quantidadePedidos }}</p>
+
+        <ul class="list-group">
+          @for (p of relatorio.pedidos; track p.pedidoId) {
+          <li class="list-group-item">
+            <strong>Pedido #{{ p.pedidoId }}</strong><br />
+            Status: {{ p.status }} <br />
+            Início: {{ p.horaInicio ? (p.horaInicio | date:'HH:mm:ss') : '---' }} <br />
+            Fim: {{ p.horaFim ? (p.horaFim | date:'HH:mm:ss') : '---' }}
+          </li>
+          }
+        </ul>
+
+        <button class="btn btn-outline-secondary mt-3" (click)="fecharRelatorio()">Fechar Relatório</button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
