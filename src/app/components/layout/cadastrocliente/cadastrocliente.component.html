@@ -1,9 +1,21 @@
 <div class="container mt-5" style="max-width: 400px">
   <div class="card shadow">
     <div class="card-body">
-      <h3 class="card-title text-center mb-4">Login Cliente</h3>
+      <h3 class="card-title text-center mb-4">Cadastro</h3>
 
       <form (ngSubmit)="CadastroCliente()">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            id="nome"
+            type="nome"
+            class="form-control"
+            [(ngModel)]="nome"
+            name="email"
+            required
+          />
+        </div>
+
         <div class="mb-3">
           <label for="email" class="form-label">E-mail</label>
           <input
@@ -27,14 +39,16 @@
             required
           />
         </div>
-
-        <button
-          type="submit"
-          class="btn btn-outline-secondary w-100"
-        >
-          Login Cliente
-        </button>
+          <button type="submit" class="btn btn-primary w-100 mb-2">Cadastrar</button>
+      
       </form>
+      <button
+        type="button"
+        class="btn btn-outline-secondary w-100"
+        (click)="abrirLoginCliente()"
+      >
+        Login Cliente
+      </button>
     </div>
   </div>
 </div>

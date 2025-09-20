@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap, throwError } from 'rxjs';
+import { Cliente } from '../../../models/cliente';
+import { ClienteService } from '../../../services/cliente.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastrocliente',
   templateUrl: './cadastrocliente.component.html',
-  styleUrls: ['./cadastrocliente.component.scss']
+  styleUrls: ['./cadastrocliente.component.scss'],
+  imports: [FormsModule],
+  standalone: true
 })
 export class CadastroclienteComponent {
   nome: string = '';
@@ -15,9 +23,9 @@ export class CadastroclienteComponent {
   confirmarSenha: string = '';
 
   constructor(
-    private router: Router
-    private clienteService: ClienteService,
-    private authService: AuthService
+    private router: Router,
+    private clienteservice: ClienteService,
+    private authservice: AuthService
   ) {}
 
   CadastroCliente(): void {
@@ -26,15 +34,8 @@ export class CadastroclienteComponent {
       Swal.fire({ title: 'Preencha todos os campos obrigatórios.', icon: 'warning', confirmButtonText: 'Ok' });
       return;
     }
-
-    if (this.confirmarSenha && this.senha !== this.confirmarSenha) {
-      Swal.fire({ title: 'As senhas não coincidem.', icon: 'error', confirmButtonText: 'Ok' });
-      return;
-    }
-
-  
     
-    this.clienteService.findByEmail(this.email.trim()).pipe(
+    this.clienteservice.findByEmail(this.email.trim()).pipe(
       switchMap((clienteExistente: Cliente | null) => {
         if (clienteExistente) {
           return throwError(() => new Error('EMAIL_JA_CADASTRADO'));
@@ -46,12 +47,12 @@ export class CadastroclienteComponent {
           senha: this.senha,
         };
 
-        return this.clienteService.create(novoCliente);
+        return this.clienteservice.create(novoCliente);
       })
     ).subscribe({
       next: (clienteCriado: Cliente) => {
-        this.authService.setRole('CLIENTE');
-        this.authService.setUser(clienteCriado);
+        this.authservice.setRole('CLIENTE');
+        this.authservice.setUser(clienteCriado);
 
         Swal.fire({
           title: 'Cadastro realizado com sucesso!',
