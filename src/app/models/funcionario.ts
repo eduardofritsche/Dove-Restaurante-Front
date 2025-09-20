@@ -1,7 +1,7 @@
 import { Pedido } from './pedido';
 
 export class Funcionario {
-  id!: number;
+  id?: number;
   nome!: string;
   cpf!: string;
   pedidos: Pedido[] = [];
