@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form (ngSubmit)="salvar(pedido)">
+        <!-- Dropdown de Marmita -->
+        <div class="mb-3">
+          <label for="marmita" class="form-label">Marmita</label>
+          <select
+            id="marmita"
+            class="form-control"
+            [(ngModel)]="pedido.marmita"
+            name="marmita"
+            required
+          >
+            <option value="PEQUENA">Pequena</option>
+            <option value="MEDIA">Média</option>
+            <option value="GRANDE">Grande</option>
+          </select>
+        </div>
+
+        <!-- Lista de Ingredientes -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Ingredientes</label>
+          <div class="list-group">
+            @for (ing of ingredientes; track ing.id) {
+            <label
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 px-3"
+              [class.active]="isChecked(ing)"
+              for="ing-{{ ing.id }}"
+            >
+              <span>{{ ing.descricao }}</span>
+              <input
+                class="form-check-input ms-2"
+                type="checkbox"
+                [checked]="isChecked(ing)"
+                (change)="toggleIngrediente(ing, $event)"
+                id="ing-{{ ing.id }}"
+              />
+            </label>
+
+            }
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar Pedido</button>
+      </form>
+    </div>
+  </div>
+</div>

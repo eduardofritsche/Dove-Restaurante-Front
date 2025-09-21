@@ -1,0 +1,40 @@
+@if (relatorio) {
+
+<button class="btn btn-danger btn-voltar" (click)="voltar()">
+⬅ Voltar
+</button>
+
+<div class="relatorio-container">
+  <div class="card shadow-lg">
+    <div class="card-header text-center">
+      <h3 class="mb-0">Relatório de Pedidos</h3>
+    </div>
+
+    <div class="card-body">
+      <div class="info-funcionario mb-4">
+        <p><strong>Funcionário:</strong> {{ relatorio.funcionarioNome }}</p>
+        <p><strong>CPF:</strong> {{ relatorio.funcionarioCpf }}</p>
+        <p><strong>Total de pedidos:</strong> {{ relatorio.quantidadePedidos }}</p>
+      </div>
+
+      <h5 class="mb-3">Detalhes dos pedidos</h5>
+      <ul class="list-group">
+        @for (p of relatorio.pedidos; track p.pedidoId) {
+        <li class="list-group-item pedido-item">
+          <div class="pedido-header">
+            <span class="badge bg-primary">#{{ p.pedidoId }}</span>
+            <span class="status" [class.status-concluido]="p.status === 'CONCLUIDO'" [class.status-andamento]="p.status === 'ANDAMENTO'">
+              {{ p.status }}
+            </span>
+          </div>
+          <div class="pedido-detalhes">
+            <p>Início: {{ p.horaInicio ? (p.horaInicio | date:'HH:mm:ss') : '---' }}</p>
+            <p>Fim: {{ p.horaFim ? (p.horaFim | date:'HH:mm:ss') : '---' }}</p>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+}

@@ -1,0 +1,53 @@
+<div class="container">
+  <h1>Listagem de Cardápios</h1>
+  <br />
+  <button class="btn btn-primary" [routerLink]="['/admin/cardapios', 'new']">
+    Novo
+  </button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Pedidos</th>
+        <th>Ingredientes</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cardapio of cardapios; track cardapio.id) {
+      <tr>
+        <td>{{ cardapio.id }}</td>
+        <td>{{ cardapio.data }}</td>
+        <td>
+          <!-- Mostra quantidade de pedidos -->
+          {{ cardapio.pedidos.length || 0 }}
+        </td>
+        <td>
+          <!-- Mostra quantidade de ingredientes -->
+          {{ cardapio.ingredientes.length || 0 }}
+        </td>
+        <td>
+          <!-- Botão Editar -->
+          <button
+            type="button"
+            class="btn btn-info me-2"
+            [routerLink]="['/admin/cardapios/edit', cardapio.id]"
+          >
+            Editar
+          </button>
+
+          <!-- Botão Excluir -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deletar(cardapio.id)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
