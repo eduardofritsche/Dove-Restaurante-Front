@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 import { LoginClienteComponent } from './components/layout/logincliente/logincliente.component';
 import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
 import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
-
+import { LandingpageComponent }  from './components/layout/landingpage/landingpage.component';
 // Imports área do cliente
 import { MeuspedidosComponent } from './components/cliente/meuspedidos/meuspedidos.component';
 import { PerfilclienteComponent } from './components/cliente/perfilcliente/perfilcliente.component';
@@ -17,9 +17,10 @@ import { CardapiodetailsComponent } from './components/cardapios/cardapiodetails
 import { PedidodetailsComponent } from './components/pedidos/pedidodetails/pedidodetails.component';
 
 export const routes: Routes = [
-  // Rota padrão → login cliente
-  { path: '', redirectTo: 'login-cliente', pathMatch: 'full' },
+  // Rota padrão → Landing page
+  { path: '', redirectTo: "landing-page", pathMatch: 'full' },
 
+  { path: 'landing-page', component: LandingpageComponent },
   // 🔹 Login / Cadastro
   { path: 'login-cliente', component: LoginClienteComponent },
   { path: 'login-funcionario', component: LoginfuncionarioComponent },

@@ -1,0 +1,31 @@
+:root{
+  --dove-primary:#ff8c00;/* laranja */
+  --dove-dark:#222;
+}
+:host { display:block; background:#0f0f0f; color:#eee; }
+
+.hero{
+  min-height: 70vh;
+  background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.85)),
+              url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover; background-position:center; color:#fff;
+  display:grid; place-items:center; text-align:center; padding:4rem 1rem;
+}
+.brand-badge{ letter-spacing:.08em; font-weight:700; color:var(--dove-primary); }
+.login-fab{
+  position:fixed; top:16px; left:16px; z-index:1030;
+}
+.login-fab .btn{ backdrop-filter: blur(6px); }
+
+/* Gallery */
+.gallery img{ cursor:pointer; border-radius:.75rem; width:100%; height:220px; object-fit:cover; }
+.dropzone{
+  border:2px dashed rgba(255,255,255,.25); border-radius:1rem; padding:1.5rem; text-align:center; color:#bbb;
+}
+.dropzone.dragover{ border-color: var(--dove-primary); color:#fff; background: rgba(255, 140, 0, .05); }
+
+.section-title{ color:#fff; }
+.btn-dove{ background:var(--dove-primary); border-color:var(--dove-primary); color:#111; }
+.btn-dove:hover{ filter:brightness(0.95); color:#111; }
+
+footer{ color:#aaa; }

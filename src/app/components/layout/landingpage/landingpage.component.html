@@ -1,0 +1,69 @@
+
+<div class="login-fab">
+  <a class="btn btn-sm btn-light shadow rounded-pill px-3" [routerLink]="loginPath">
+    ↩︎ Área de Login
+  </a>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <div class="brand-badge mb-2">RESTAURANTE DOVE</div>
+        <h1 class="display-5 fw-bold mb-3">Sabor caseiro, experiência moderna</h1>
+        <p class="lead mb-4">Bem-vindo à nossa casa. Conheça o cardápio, veja o buffet do dia e faça seus pedidos online.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <a href="#galeria" class="btn btn-dove btn-lg rounded-pill px-4">Ver galeria</a>
+          <a href="#sobre" class="btn btn-outline-light btn-lg rounded-pill px-4">Sobre</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Galeria dinâmica -->
+<main class="container my-5" id="galeria">
+  <div class="d-flex align-items-end justify-content-between flex-wrap gap-3 mb-3">
+    <div>
+      <h2 class="section-title h3 mb-1">Galeria</h2>
+      <p class="mb-0 text-secondary">Adicione fotos do buffet, pratos e eventos — elas ficam salvas no seu navegador (localStorage).</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button id="btnAdd" class="btn btn-dove">Adicionar imagens</button>
+      <button id="btnClear" class="btn btn-outline-light">Limpar galeria</button>
+      <input id="fileInput" type="file" accept="image/*" multiple hidden>
+    </div>
+  </div>
+
+  <div id="dropzone" class="dropzone mb-4">
+    Arraste e solte imagens aqui ou use o botão <strong>Adicionar imagens</strong>.
+  </div>
+
+  <div id="grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3 gallery"></div>
+</main>
+
+<!-- Sobre -->
+<section class="container my-5" id="sobre">
+  <div class="row g-4 align-items-center">
+    <div class="col-md-6">
+      <h2 class="section-title h3">Sobre o Dove</h2>
+      <p class="text-secondary">Com cardápio variado de segunda a sábado, o Restaurante Dove oferece pratos caseiros e marmitas com ingredientes selecionados. Nesta landing page você acompanha nossa galeria e acessa a área do cliente para fazer pedidos.</p>
+      <ul class="text-secondary mb-0">
+        <li>Cardápio do dia atualizado</li>
+        <li>Pedidos online para retirada</li>
+        <li>Atendimento ágil e transparente</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div class="ratio ratio-16x9 rounded" style="overflow:hidden">
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1600&auto=format&fit=crop"
+             alt="Buffet" class="w-100 h-100" style="object-fit:cover;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-top border-secondary-subtle mt-5 py-4">
+  <div class="container small d-flex flex-wrap justify-content-between gap-2">
+    <span>© <span id="year"></span> Restaurante Dove. Todos os direitos reservados.</span>
+    <span class="text-secondary">Foz do Iguaçu •
