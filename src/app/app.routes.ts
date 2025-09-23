@@ -5,6 +5,7 @@ import { LoginClienteComponent } from './components/layout/logincliente/logincli
 import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
 import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
 import { LandingpageComponent }  from './components/layout/landingpage/landingpage.component';
+import { TrocarSenhaComponent } from './components/cliente/trocarsenha/trocarsenha.component';
 // Imports área do cliente
 import { MeuspedidosComponent } from './components/cliente/meuspedidos/meuspedidos.component';
 import { PerfilclienteComponent } from './components/cliente/perfilcliente/perfilcliente.component';
@@ -41,6 +42,7 @@ export const routes: Routes = [
       { path: 'cliente/pedidos/new', component: PedidodetailsComponent },
       { path: 'cliente/pedidos/edit/:id', component: PedidodetailsComponent },
       { path: 'cliente/perfil', component: PerfilclienteComponent },
+      { path: 'cliente/senha', component: TrocarSenhaComponent },
 
       // Área do funcionário (admin)
       // { path: 'admin/clientes', component: ClientelistComponent },
