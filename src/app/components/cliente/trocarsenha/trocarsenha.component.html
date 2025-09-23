@@ -1,0 +1,125 @@
+<div class="container">
+  <h1>Trocar Senha</h1>
+  <br />
+
+  <button
+    class="btn btn-primary mb-3"
+    (click)="trocarSenha()"
+    [disabled]="!podeSalvar() || loading"
+  >
+    {{ loading ? 'Salvando...' : 'Salvar Nova Senha' }}
+  </button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Campo</th>
+        <th>Valor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Senha atual -->
+      <tr>
+        <td>Senha Atual</td>
+        <td>
+          <div class="input-group">
+            <input
+              [type]="mostrarAtual ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="senhaAtual"
+              name="senhaAtual"
+              placeholder="Digite sua senha atual"
+              autocomplete="current-password"
+              required
+            />
+            <button class="btn btn-outline-secondary" type="button" (click)="mostrarAtual = !mostrarAtual">
+              {{ mostrarAtual ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          @if (senhaAtual?.length === 0 && submitted) {
+            <small class="text-danger">Informe a senha atual.</small>
+          }
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-danger" type="button" (click)="senhaAtual = ''">
+            Limpar
+          </button>
+        </td>
+      </tr>
+
+      <!-- Nova senha -->
+      <tr>
+        <td>Nova Senha</td>
+        <td>
+          <div class="input-group">
+            <input
+              [type]="mostrarNova ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="novaSenha"
+              name="novaSenha"
+              placeholder="Crie uma nova senha"
+              autocomplete="new-password"
+              required
+              (input)="calcularForca()"
+            />
+            <button class="btn btn-outline-secondary" type="button" (click)="mostrarNova = !mostrarNova">
+              {{ mostrarNova ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+
+          <!-- Indicador de força -->
+          <div class="mt-1">
+            <small [ngClass]="classeForca">
+              Força: {{ rotuloForca }}
+            </small>
+          </div>
+
+          <!-- Regras -->
+          <ul class="small mb-0 text-secondary">
+            <li [class.text-success]="regras.minLen" [class.text-danger]="!regras.minLen">Mínimo 8 caracteres</li>
+            <li [class.text-success]="regras.upper" [class.text-danger]="!regras.upper">Letra maiúscula</li>
+            <li [class.text-success]="regras.lower" [class.text-danger]="!regras.lower">Letra minúscula</li>
+            <li [class.text-success]="regras.number" [class.text-danger]="!regras.number">Número</li>
+            <li [class.text-success]="regras.special" [class.text-danger]="!regras.special">Caractere especial</li>
+          </ul>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-danger" type="button" (click)="novaSenha = ''; calcularForca()">
+            Limpar
+          </button>
+        </td>
+      </tr>
+
+      <!-- Confirmar nova senha -->
+      <tr>
+        <td>Confirmar Nova Senha</td>
+        <td>
+          <div class="input-group">
+            <input
+              [type]="mostrarConfirm ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="confirmarSenha"
+              name="confirmarSenha"
+              placeholder="Repita a nova senha"
+              autocomplete="new-password"
+              required
+            />
+            <button class="btn btn-outline-secondary" type="button" (click)="mostrarConfirm = !mostrarConfirm">
+              {{ mostrarConfirm ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          @if (!senhasConferem() && confirmarSenha?.length) {
+            <small class="text-danger">As senhas não coincidem.</small>
+          }
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-danger" type="button" (click)="confirmarSenha = ''">
+            Limpar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

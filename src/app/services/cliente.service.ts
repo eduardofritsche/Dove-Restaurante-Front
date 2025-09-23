@@ -19,4 +19,9 @@ export class ClienteService {
 create(dto: Partial<Cliente>): Observable<Cliente> {
     return this.http.post<Cliente>(this.API, dto);
   }
+
+ 
+changePassword(userId: number, body: { senhaAtual: string; novaSenha: string; }) {
+  return this.http.put<void>(`${this.API}/${userId}/senha`, body);
+}
 }
