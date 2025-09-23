@@ -89,7 +89,12 @@ export class PedidodetailsComponent {
   salvar(pedido: Pedido) {
     // hora de início só na criação
     if (!pedido.id) {
-      pedido.hora_inicio = new Date().toISOString().substring(11, 16); // formato HH:mm
+      const agora = new Date();
+      pedido.hora_inicio = agora.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      }); // HH:mm:ss
     }
 
     const salvarObs = pedido.id

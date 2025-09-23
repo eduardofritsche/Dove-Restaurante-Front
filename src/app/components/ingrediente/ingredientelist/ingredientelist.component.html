@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Listagem de Ingredientes</h1>
+  <br />
+  <button class="btn btn-primary" [routerLink]="['/admin/ingredientes', 'new']">
+    Novo Ingrediente
+  </button>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ingrediente of ingredientes; track ingrediente.id) {
+      <tr>
+        <td>{{ ingrediente.id }}</td>
+        <td>{{ ingrediente.descricao }}</td>
+        <td>
+          <!-- Editar -->
+          <button
+            class="btn btn-info me-2"
+            [routerLink]="['/admin/ingredientes', ingrediente.id, 'edit']"
+          >
+            Editar
+          </button>
+
+          <!-- Excluir -->
+          <button
+            class="btn btn-danger"
+            (click)="deletar(ingrediente)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

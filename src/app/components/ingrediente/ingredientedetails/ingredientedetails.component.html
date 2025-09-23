@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">
+        {{ ingrediente.id ? 'Editar Ingrediente' : 'Novo Ingrediente' }}
+      </h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="salvar()">
+        <!-- Descrição -->
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <input
+            id="descricao"
+            type="text"
+            class="form-control"
+            [(ngModel)]="ingrediente.descricao"
+            name="descricao"
+            required
+          />
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            {{ ingrediente.id ? 'Salvar Alterações' : 'Cadastrar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
