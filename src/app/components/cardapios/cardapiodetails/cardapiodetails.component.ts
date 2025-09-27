@@ -64,6 +64,27 @@ export class CardapiodetailsComponent {
   }
 
   salvar(cardapio: Cardapio) {
+    // validação antes de salvar/atualizar
+    if (!cardapio.data || !cardapio.data.trim()) {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'O cardápio precisa ter uma data válida.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+      return;
+    }
+
+    if (!cardapio.ingredientes || cardapio.ingredientes.length === 0) {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'O cardápio precisa ter pelo menos um ingrediente.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+      return;
+    }
+
     if (cardapio.id == null) {
       // criar
       this.cardapioService.save(cardapio).subscribe({
