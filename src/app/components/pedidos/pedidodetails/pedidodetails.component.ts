@@ -87,6 +87,27 @@ export class PedidodetailsComponent {
   }
 
   salvar(pedido: Pedido) {
+    // validação antes de salvar
+    if (!pedido.marmita || !pedido.marmita.trim()) {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'O pedido precisa ter uma marmita selecionada.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+      return;
+    }
+
+    if (!pedido.ingredientes || pedido.ingredientes.length === 0) {
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'O pedido precisa ter pelo menos um ingrediente.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+      return;
+    }
+
     // hora de início só na criação
     if (!pedido.id) {
       const agora = new Date();
@@ -113,7 +134,6 @@ export class PedidodetailsComponent {
           } else if (this.authService.isCliente()) {
             this.router.navigate(['/cliente/pedidos']);
           } else {
-            // fallback caso não seja nenhum (ex: erro de autenticação)
             this.router.navigate(['/']);
           }
         });
