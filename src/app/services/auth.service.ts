@@ -40,6 +40,10 @@ export class AuthService {
     return this.user;
   }
 
+    getUserId(): number | null {
+    return this.getUser()?.id ?? null;
+  }
+
   isFuncionario(): boolean {
     return this.getRole() === 'FUNCIONARIO';
   }
@@ -49,7 +53,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.user !== null;
+    return !!this.getUserId;
   }
 
   logout() {

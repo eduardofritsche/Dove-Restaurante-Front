@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrocarsenhaComponent } from './trocarsenha.component';
+import { TrocarSenhaComponent } from './trocarsenha.component';
 
 describe('TrocarsenhaComponent', () => {
-  let component: TrocarsenhaComponent;
-  let fixture: ComponentFixture<TrocarsenhaComponent>;
+  let component: TrocarSenhaComponent;
+  let fixture: ComponentFixture<TrocarSenhaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TrocarsenhaComponent]
+      imports: [TrocarSenhaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TrocarsenhaComponent);
+    fixture = TestBed.createComponent(TrocarSenhaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

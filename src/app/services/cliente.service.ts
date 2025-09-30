@@ -20,8 +20,7 @@ export class ClienteService {
     return this.http.post<Cliente>(`${this.API}/save`, dto);
   }
 
- 
-changePassword(userId: number, body: { senhaAtual: string; novaSenha: string; }) {
-  return this.http.put<void>(`${this.API}/${userId}/senha`, body);
+ changePassword(clienteId: number, body: { senhaAtual: string; novaSenha: string; }) {
+  return this.http.put<void>(`${this.API}/senha/${clienteId}`, body);
 }
 }

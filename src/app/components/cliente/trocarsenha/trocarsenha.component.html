@@ -38,7 +38,7 @@
               {{ mostrarAtual ? 'Ocultar' : 'Mostrar' }}
             </button>
           </div>
-          @if (senhaAtual?.length === 0 && submitted) {
+          @if (senhaAtual.length === 0 && submitted) {
             <small class="text-danger">Informe a senha atual.</small>
           }
         </td>
@@ -110,7 +110,7 @@
               {{ mostrarConfirm ? 'Ocultar' : 'Mostrar' }}
             </button>
           </div>
-          @if (!senhasConferem() && confirmarSenha?.length) {
+          @if (!senhasConferem() && confirmarSenha.length) {
             <small class="text-danger">As senhas não coincidem.</small>
           }
         </td>
