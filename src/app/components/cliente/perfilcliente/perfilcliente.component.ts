@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-perfilcliente',
+  selector: 'perfil-cliente',
   imports: [],
   templateUrl: './perfilcliente.component.html',
-  styleUrl: './perfilcliente.component.scss'
+  styleUrl: 'perfilcliente.component.scss'
 })
 export class PerfilclienteComponent {
 
