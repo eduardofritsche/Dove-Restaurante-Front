@@ -1,0 +1,166 @@
+
+
+$accent: #FFA500;
+$accent-dark: #cc8400;
+$radius: 14px;
+$shadow-strong: 0 10px 26px rgba(0, 0, 0, 0.18);
+$shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+/* Container central */
+.container {
+  max-width: 420px !important;
+  margin-top: 4rem;
+
+}
+
+/* Card */
+.card {
+  border-radius: $radius;
+  border: none;
+  box-shadow: $shadow-strong;
+  overflow: hidden;
+  background: #ffffff;
+
+  .card-body {
+    padding: 2rem;
+  }
+}
+
+/* Título */
+.card-title {
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #0b0c0f;
+  letter-spacing: .3px;
+  margin-bottom: 1.8rem;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,.9), $accent);
+    border-radius: 2px;
+  }
+}
+
+/* Labels */
+.form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Inputs */
+.form-control {
+  border-radius: $radius;
+  padding: .6rem .8rem;
+  border: 1px solid rgba(0,0,0,.15);
+  background: #f7f8fa;
+  color: #0b0c0f;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.35);
+  }
+}
+
+/* Botão principal (Entrar) */
+.btn-primary {
+  background: $accent !important;
+  border: 1px solid white !important;
+  color: white !important;
+  font-weight: 700;
+  letter-spacing: .3px;
+  padding: .7rem 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow-soft;
+
+  &:hover {
+    background: rgba(255,255,255,.88) !important;
+    color: $accent-dark !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, .35);
+  }
+}
+
+/* Botão cadastrar (outline laranja) */
+.btn-outline-success {
+  border-color: $accent !important;
+  color: $accent !important;
+  font-weight: 600;
+  border-radius: $radius;
+  padding: .7rem;
+
+  &:hover {
+    background: $accent;
+    color: white !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, .35);
+  }
+}
+
+/* Botão Login Funcionário (cinza suave) */
+.btn-outline-secondary {
+  border-color: rgba(0,0,0,.2);
+  color: #333;
+  font-weight: 600;
+  border-radius: $radius;
+  padding: .7rem;
+
+  &:hover {
+    background: rgba(0,0,0,.05);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(0,0,0,.15);
+  }
+}
+
+/* Transição suave nos botões */
+.btn {
+  transition: all .22s ease;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  padding-right: 45px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: #FFA500;
+  font-size: 1.1rem;
+  transition: 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: darken(#FFA500, 10%);
+  transform: scale(1.1);
+}
+
+/* Fundo com degradê branco → laranja suave */
+.login-background {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff, #ffe7c2, #ffc166);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+} 
+

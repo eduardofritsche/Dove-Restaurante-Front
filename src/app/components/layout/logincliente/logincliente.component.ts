@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../../services/cliente.service';
@@ -8,16 +9,18 @@ import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-logincliente',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './logincliente.component.html',
   styleUrl: './logincliente.component.scss',
 })
 export class LoginClienteComponent {
   email: string = '';
   senha: string = '';
+  mostrarSenha: boolean = false;
   router = inject(Router);
   clienteService = inject(ClienteService);
   authService = inject(AuthService);
+
 
   loginCliente() {
     this.clienteService.findByEmail(this.email).subscribe({
@@ -59,3 +62,5 @@ export class LoginClienteComponent {
     this.router.navigate(['/login-funcionario']);
   }
 }
+
+

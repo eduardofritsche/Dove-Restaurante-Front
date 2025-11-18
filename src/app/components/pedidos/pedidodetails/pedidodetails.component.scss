@@ -1,0 +1,163 @@
+.pedido-details {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
+}
+
+/* Card principal */
+.pedido-details > .card {
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  overflow: hidden;
+}
+
+/* Corpo do card */
+.pedido-details .card-body {
+  padding: 1.5rem 1.6rem;
+}
+
+/* Labels e campos (Marmita) */
+.pedido-details .form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: .35rem;
+}
+
+.pedido-details .form-control,
+.pedido-details select.form-control {
+  background: #f7f8fa;
+  color: #0b0c0f;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  padding: .55rem .8rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #FFA500;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.25);
+    background: #ffffff;
+  }
+}
+
+/* Lista de ingredientes */
+.pedido-details .list-group {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.pedido-details .list-group-item {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+  background: #ffffff;
+  font-size: .95rem;
+  transition: background-color .15s ease, box-shadow .15s ease, transform .12s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #fff8ec;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,.08);
+  }
+}
+
+/* Item ativo (quando isChecked(ing) === true) */
+.pedido-details .list-group-item.active {
+  background: #fff4e0 !important;
+  color: #0b0c0f !important;
+  border-bottom-color: rgba(0,0,0,.08);
+  box-shadow: inset 3px 0 0 0 #FFA500;
+}
+
+/* Checkbox de ingredientes */
+.pedido-details .form-check-input {
+  width: 1.05rem;
+  height: 1.05rem;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,.25);
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+
+  &:checked {
+    background-color: #FFA500;
+    border-color: #FFA500;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.25);
+  }
+}
+
+/* Botão Salvar Pedido */
+.pedido-details .btn.btn-primary {
+  margin-top: .75rem;
+  background: #FFA500;
+  color: #fff;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  font-weight: 600;
+  letter-spacing: .3px;
+  padding: .55rem 1.2rem;
+  box-shadow: 0 6px 12px rgba(255,165,0,.35);
+  transition: background-color .2s ease, box-shadow .2s ease, transform .1s ease;
+
+  &:hover {
+    background: #ffb733;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(255,165,0,.4);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.35);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .pedido-details {
+    padding: 0 1rem;
+  }
+
+  .pedido-details .card-body {
+    padding: 1.2rem;
+  }
+
+  .pedido-details .btn.btn-primary {
+    width: 100%;
+    justify-content: center;
+    display: inline-flex;
+  }
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23FFA500' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.5 5.5l6 6 6-6H1.5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+
+  padding-right: 40px;
+
+  border-radius: 10px;
+  border: 1px solid #FFA500;
+  color: #0b0c0f;
+
+  &:focus {
+    border-color: #FFA500;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.35);
+  }
+}
+

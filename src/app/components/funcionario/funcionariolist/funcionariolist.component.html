@@ -1,4 +1,5 @@
-<div class="container">
+<div class="login-background">
+ <div class="container">
   <h1>Listagem de Funcionários</h1>
   <br />
   <button class="btn btn-primary" [routerLink]="['/admin/funcionarios', 'new']">
@@ -21,6 +22,12 @@
         <td>{{ funcionario.nome }}</td>
         <td>{{ funcionario.cpf }}</td>
         <td>
+
+          <!-- Relatório -->
+          <button class="btn btn-success" [routerLink]="['/admin/funcionarios', funcionario.id, 'relatorio']">
+          Relatório De Pedidos
+          </button>
+          
           <!-- Editar -->
           <button
             class="btn btn-info me-2"
@@ -35,11 +42,6 @@
             (click)="deletar(funcionario)"
           >
             Excluir
-          </button>
-
-          <!-- Relatório -->
-          <button class="btn btn-success" [routerLink]="['/admin/funcionarios', funcionario.id, 'relatorio']">
-          Relatório De Pedidos
           </button>
 
         </td>
@@ -72,5 +74,6 @@
       </div>
     </div>
   </div>
-  }
+ }
+  </div>
 </div>

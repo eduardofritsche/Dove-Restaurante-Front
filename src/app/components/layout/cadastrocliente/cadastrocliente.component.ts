@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { switchMap, throwError } from 'rxjs';
 import { Cliente } from '../../../models/cliente';
@@ -12,7 +13,7 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-cadastrocliente',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './cadastrocliente.component.html',
   styleUrls: ['./cadastrocliente.component.scss'],
 })
@@ -21,6 +22,7 @@ export class CadastroclienteComponent {
   email: string = '';
   senha: string = '';
   confirmarSenha: string = '';
+  mostrarSenhaCadastro: boolean = false;
   clienteservice = inject(ClienteService);
   authservice = inject(AuthService);
 

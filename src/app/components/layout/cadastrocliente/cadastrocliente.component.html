@@ -1,9 +1,11 @@
-<div class="container mt-5" style="max-width: 450px">
+<div class="login-background">
+<div class="container mt-5" style="max-width: 480px">
   <div class="card shadow">
     <div class="card-body">
       <h3 class="card-title text-center mb-4">Cadastro de Cliente</h3>
 
       <form (ngSubmit)="CadastroCliente()">
+
         <!-- Nome -->
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
@@ -17,7 +19,7 @@
           />
         </div>
 
-        <!-- E-mail -->
+        <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label">E-mail</label>
           <input
@@ -30,19 +32,31 @@
           />
         </div>
 
-        <!-- Senha -->
+        <!-- Senha com olho -->
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
-          <input
-            id="senha"
-            type="password"
-            class="form-control"
-            [(ngModel)]="senha"
-            name="senha"
-            required
-          />
-        </div>
 
+          <div class="password-input-container">
+            <input
+              id="senha"
+              [type]="mostrarSenhaCadastro ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="senha"
+              name="senha"
+              required
+            />
+
+            <span
+              class="toggle-password"
+              (click)="mostrarSenhaCadastro = !mostrarSenhaCadastro"
+            >
+              <i
+                class="fa"
+                [ngClass]="mostrarSenhaCadastro ? 'fa-eye-slash' : 'fa-eye'"
+              ></i>
+            </span>
+          </div>
+        </div>
 
         <!-- Botão Cadastrar -->
         <button type="submit" class="btn btn-outline-success w-100">
@@ -60,4 +74,5 @@
       </form>
     </div>
   </div>
+ </div>
 </div>

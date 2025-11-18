@@ -1,51 +1,68 @@
-<div class="container mt-5" style="max-width: 400px">
-  <div class="card shadow">
-    <div class="card-body">
-      <h3 class="card-title text-center mb-4">Login Cliente</h3>
+<div class="login-background">
 
-      <form (ngSubmit)="loginCliente()">
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            class="form-control"
-            [(ngModel)]="email"
-            name="email"
-            required
-          />
-        </div>
+  <div class="login-wrapper">
+    <!-- LOGO -->
+    <img src="/img/logo.png" class="login-logo" alt="Logo Restaurante Dove">
+  </div>
 
-        <div class="mb-3">
-          <label for="senha" class="form-label">Senha</label>
-          <input
-            id="senha"
-            type="password"
-            class="form-control"
-            [(ngModel)]="senha"
-            name="senha"
-            required
-          />
-        </div>
+  <div class="container" style="max-width: 480px">
+    <div class="card shadow login-card">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Login</h3>
 
-        <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
-      </form>
+        <form (ngSubmit)="loginCliente()">
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              class="form-control"
+              [(ngModel)]="email"
+              name="email"
+              required
+            />
+          </div>
 
-      <button
-        type="button"
-        class="btn btn-outline-success w-100 mb-2"
-        (click)="abrirCadastro()"
-      >
-        Cadastrar Cliente
-      </button>
+          <!-- Senha com olho -->
+          <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
 
-      <button
-        type="button"
-        class="btn btn-outline-secondary w-100"
-        (click)="abrirLoginFuncionario()"
-      >
-        Login Funcionário
-      </button>
+            <div class="password-input-container">
+              <input
+                id="senha"
+                [type]="mostrarSenha ? 'text' : 'password'"
+                class="form-control"
+                [(ngModel)]="senha"
+                name="senha"
+                required
+              />
+
+              <span class="toggle-password" (click)="mostrarSenha = !mostrarSenha">
+                <i class="fa" [ngClass]="mostrarSenha ? 'fa-eye-slash' : 'fa-eye'"></i>
+              </span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+        </form>
+
+        <button
+          type="button"
+          class="btn btn-outline-success w-100 mb-2"
+          (click)="abrirCadastro()"
+        >
+          Cadastrar Cliente
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary w-100"
+          (click)="abrirLoginFuncionario()"
+        >
+          Login Funcionário
+        </button>
+      </div>
     </div>
   </div>
 </div>
