@@ -1,0 +1,162 @@
+
+
+$accent: #FFA500 !default;
+$accent-600: mix(black, $accent, 12%);
+$accent-700: mix(black, $accent, 22%);
+
+$bg: #0b0c0f !default;
+$surface: #111318 !default;
+$soft-surface: #141821 !default;
+$text: rgba(255,255,255,0.92) !default;
+$muted: rgba(255,255,255,0.64) !default;
+$border: rgba(255,255,255,0.08) !default;
+$overlay: rgba(14,16,20,0.55) !default;
+
+$radius: 16px !default;
+$radius-sm: 10px !default;
+$radius-lg: 22px !default;
+$pad: 16px !default;
+$gap: 14px !default;
+
+$font-sans: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, 'Helvetica Neue', Arial, 'Noto Sans';
+
+$shadow-1: 0 6px 16px rgba(0,0,0,0.25);
+$shadow-2: 0 12px 30px rgba(0,0,0,0.35);
+
+@mixin focus-ring($c: $accent) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba($c, 0.32);
+  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+html, body {
+  background: $bg;
+  color: $text;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Navbar laranja — com brand aprimorado (sem mudar HTML)
+.navbar.bg-primary[data-mdb-theme="dark"] {
+  background: linear-gradient(90deg, lighten($accent, 2%), darken($accent, 8%)) !important;
+  border-bottom: none;
+  color: #fff;
+
+  .navbar-brand, .navbar-toggler { color: #fff !important; }
+
+  // ----- Brand ("Restaurante Dove")
+  .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .35rem .7rem;
+    border-radius: $radius-sm;
+    font-weight: 800;
+    letter-spacing: .3px;
+    text-transform: none;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+    transition: transform .15s ease, background-color .2s ease, box-shadow .2s ease;
+
+    // sublinhado de destaque
+
+    &:hover { background: rgba(255,255,255,.12); box-shadow: 0 6px 6px rgba(0,0,0,.18); transform: translateY(-1px); }
+
+  }
+
+  .nav-link {
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: $radius-sm;
+    margin-left: 1.2rem;
+    padding: .4rem .8rem;
+    transition: all .2s ease;
+    &:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #fff;
+    }
+    &:focus { @include focus-ring(white); }
+  }
+
+  // Botão Sair e demais botões
+  .btn-outline-danger,
+  .nav-link[href*="funcionarios"],
+  .nav-link[href*="cardapios"],
+  .nav-link[href*="pedidos"],
+  .nav-link[href*="ingredientes"] {
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: $radius-sm;
+    color: white !important;
+    background: transparent;
+    font-weight: 600;
+    &:hover {
+      background: white !important;
+      color: $accent !important;
+      border-color: white !important;
+    }
+    &:focus { @include focus-ring(white); }
+  }
+}
+
+// Botões gerais
+.btn {
+  border-radius: $radius-sm;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: all .2s ease;
+}
+
+.btn-primary, .btn-orange {
+  background: white;
+  color: $accent;
+  border: 1px solid white;
+  &:hover { background: rgba(255,255,255,0.85); color: $accent-700; }
+  &:focus { @include focus-ring(white); }
+}
+
+.btn-outline-primary, .btn-outline-orange {
+  background: transparent; color: white; border-color: white;
+  &:hover { background: white; color: $accent; }
+  &:focus { @include focus-ring(white); }
+}
+
+.form-control, .form-select, .form-check-input {
+  background: $soft-surface;
+  color: $text;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  &:focus { border-color: rgba($accent,.7); @include focus-ring($accent); }
+}
+
+.table {
+  color: $text;
+  th, td { border-color: $border !important; }
+  thead th { color: $muted; font-weight: 600; text-transform: uppercase; font-size: .78rem; }
+}
+
+.badge, .chip {
+  background: rgba($accent, .14);
+  color: $accent;
+  border: 1px solid rgba($accent,.35);
+  border-radius: 999px;
+}
+
+.footer-minimal { color: $muted; border-top: 1px solid $border; padding: $pad 0; }
+
+:root[data-theme="light"] {
+  --bg: #f7f8fb; --surface: #ffffff; --soft-surface: #f3f5f9; --text: #0b0c0f; --muted: rgba(11,12,15,.64); --border: rgba(11,12,15,.08);
+}
+
+
+.logo-navbar {
+  height: 57px;      // aumenta aqui
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+  transition: transform .18s ease-in-out;
+}
+
+.logo-navbar:hover {
+  transform: scale(1.05);
+}

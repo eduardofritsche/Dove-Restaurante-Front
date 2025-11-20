@@ -1,0 +1,172 @@
+.pedido-list {
+  // Título
+  > h1 {
+    font-weight: 800;
+    letter-spacing: .2px;
+    margin-top: .5rem;
+    margin-bottom: .25rem;
+    position: relative;
+    display: inline-block;
+    line-height: 1.2;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: -6px;
+      bottom: -8px;
+      height: 3px;
+      background: linear-gradient(90deg, rgba(255,255,255,.85), #FFA500);
+      border-radius: 2px;
+    }
+  }
+
+  // Botão "Novo Pedido"
+  > .btn.btn-primary {
+    margin-top: 3.5rem;
+    border-radius: 10px;
+    background: #FFA500 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,.15);
+
+    &:hover:not(:disabled) {
+      background: rgba(255,255,255,.88) !important;
+      color: #cc8400 !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.32);
+    }
+
+    &:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+
+  // Tabela
+  .table.table-striped {
+    --row-hover: rgba(255,255,255,.03);
+    --row-stripe: rgba(255,255,255,.015);
+
+    background: #ffffff !important;
+    color: #0b0c0f !important;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+
+    thead th {
+      color: #0b0c0f !important;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .04em;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-of-type(odd) {
+      background: var(--row-stripe);
+    }
+
+    tbody tr:hover {
+      background: rgba(255,255,255,.03);
+      box-shadow: inset 3px 0 0 0 #FFA500;
+    }
+
+    tbody td {
+      vertical-align: middle;
+      border-top-color: rgba(255,255,255,0.08) !important;
+    }
+  }
+
+  // Botões de ação
+  .table .btn {
+    padding: .38rem .7rem;
+    border-radius: 10px;
+    margin-right: .75rem;
+  }
+
+  .table td:last-child .btn:last-child {
+    margin-right: 0;
+  }
+
+  // Editar (btn-info) – igual Cardápio
+  .btn-info {
+    background: #FFA500 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      background: rgba(255,255,255,.88) !important;
+      color: #cc8400 !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.32);
+    }
+
+    &:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none !important;
+    }
+  }
+
+  // Pronto (btn-success) – mesmo estilo laranja
+  .btn-success {
+    background: #FFA500 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      background: rgba(255,255,255,.88) !important;
+      color: #cc8400 !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.32);
+    }
+
+    &:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none !important;
+    }
+  }
+
+  // Excluir (btn-danger)
+  .btn-danger {
+    box-shadow: none !important;
+    text-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      background: rgba(255,255,255,.88) !important;
+      color: red !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.32);
+    }
+
+    &:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none !important;
+    }
+  }
+}
+

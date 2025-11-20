@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pedido-list">
   <h1>Listagem de Pedidos</h1>
   <br />
   <button
@@ -38,15 +38,6 @@
         <td>{{ pedido.cardapio.data }}</td>
 
         <td>
-          <!-- Botão Editar -->
-          <button
-            class="btn btn-info me-2"
-            [routerLink]="['/admin/pedidos/edit', pedido.id]"
-            [disabled]="!podeEditar(pedido)"
-          >
-            Editar
-          </button>
-
           <!-- Botão Pronto -->
           <button
             type="button"
@@ -55,6 +46,15 @@
             (click)="markAsPronto(pedido)"
           >
             Pronto
+          </button>
+
+          <!-- Botão Editar -->
+          <button
+            class="btn btn-info me-2"
+            [routerLink]="['/admin/pedidos/edit', pedido.id]"
+            [disabled]="!podeEditar(pedido)"
+          >
+            Editar
           </button>
 
           <!-- Botão Excluir -->
