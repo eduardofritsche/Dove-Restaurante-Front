@@ -8,7 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-cadastrocliente',
@@ -24,12 +23,10 @@ export class CadastroclienteComponent {
   confirmarSenha: string = '';
   mostrarSenhaCadastro: boolean = false;
   clienteservice = inject(ClienteService);
-  authservice = inject(AuthService);
 
   constructor(
     private router: Router,
     private clienteService: ClienteService,
-    private authService: AuthService
   ) {}
 
   CadastroCliente(): void {
@@ -61,8 +58,6 @@ export class CadastroclienteComponent {
       )
       .subscribe({
         next: (clienteCriado: Cliente) => {
-          this.authservice.setRole('CLIENTE');
-          this.authservice.setUser(clienteCriado);
 
           Swal.fire({
             title: 'Cadastro realizado com sucesso!',
