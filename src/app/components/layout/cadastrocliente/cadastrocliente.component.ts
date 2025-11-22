@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { of, switchMap, throwError } from 'rxjs';
 import { Cliente } from '../../../models/cliente';
-import { ClienteService } from '../../../services/cliente.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../models/usuario';
 
 @Component({
   selector: 'app-cadastrocliente',
@@ -22,12 +22,10 @@ export class CadastroclienteComponent {
   senha: string = '';
   confirmarSenha: string = '';
   mostrarSenhaCadastro: boolean = false;
-  clienteservice = inject(ClienteService);
+  usuarioService = inject(UsuarioService);
 
   constructor(
-    private router: Router,
-    private clienteService: ClienteService,
-  ) {}
+    private router: Router  ) {}
 
   CadastroCliente(): void {
     if (!this.nome?.trim() || !this.email?.trim() || !this.senha?.trim()) {
@@ -39,7 +37,7 @@ export class CadastroclienteComponent {
       return;
     }
 
-    this.clienteservice
+    this.usuarioService
       .findByEmail(this.email.trim())
       .pipe(
         catchError((err: any) => {
@@ -48,18 +46,19 @@ export class CadastroclienteComponent {
           }
           return throwError(() => err);
         }),
-        switchMap((clienteExistente: Cliente | null) => {
-          if (clienteExistente) {
+        switchMap((usuarioExistente: Usuario | null) => {
+          if (usuarioExistente) {
             return throwError(() => new Error('EMAIL_JA_CADASTRADO'));
           }
 
-          const novoCliente: Partial<Cliente> = {
+          const novoCliente: Partial<Usuario> = {
             nome: this.nome.trim(),
             email: this.email.trim(),
             senha: this.senha,
+            tipo: 'CLIENTE',
           };
 
-          return this.clienteservice.create(novoCliente);
+          return this.usuarioService.save(novoCliente);
         })
       )
       .subscribe({
@@ -93,6 +92,6 @@ export class CadastroclienteComponent {
   }
 
   abrirLoginCliente() {
-    this.router.navigate(['/login-cliente']);
+    this.router.navigate(['/login-cliente4']);
   }
 }
