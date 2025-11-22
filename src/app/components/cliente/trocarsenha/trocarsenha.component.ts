@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AuthService } from '../../../services/auth.service';
 
 type Regras = {
   minLen: boolean;
@@ -51,16 +50,16 @@ export class TrocarSenhaComponent implements OnInit {
   // Injeções
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
-  private auth = inject(AuthService);
+  // private auth = inject(AuthService);
 
   ngOnInit(): void {
     // 1) Tenta pelo AuthService (login salvou o usuário com id)
-    const authId = this.auth.getUserId?.() ?? null;
-    if (authId) {
-      this.clienteId = authId;
-      // console.log('[TrocarSenha] id via AuthService =', this.clienteId);
-      return;
-    }
+    // const authId = this.auth.getUserId?.() ?? null;
+    // if (authId) {
+    //   this.clienteId = authId;
+    //   // console.log('[TrocarSenha] id via AuthService =', this.clienteId);
+    //   return;
+    // }
 
     // 2) Tenta pela rota (/.../:id/...)
     const idParam = this.route.snapshot.paramMap.get('id');

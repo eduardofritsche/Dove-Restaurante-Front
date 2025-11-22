@@ -4,7 +4,6 @@ import { Pedido } from '../../../models/pedido';
 import { PedidoService } from '../../../services/pedido.service';
 import { Cardapio } from '../../../models/cardapio';
 import { CardapioService } from '../../../services/cardapio.service';
-import { AuthService } from '../../../services/auth.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -15,13 +14,12 @@ import { RouterLink } from '@angular/router';
 })
 export class MeuspedidosComponent {
   pedidoService = inject(PedidoService);
-  authService = inject(AuthService);
   cardapioService = inject(CardapioService);
   cardapioDoDia: Cardapio | null = null;
   pedidos: Pedido[] = [];
 
   ngOnInit(): void {
-    this.findPedidosCliente();
+    // this.findPedidosCliente();
     this.carregarCardapioDoDia();
   }
 
@@ -37,20 +35,20 @@ export class MeuspedidosComponent {
     });
   }
 
-  findPedidosCliente() {
-    const clienteId = this.authService.getUser()?.id; // id do cliente logado
-    if (!clienteId) return;
+  // findPedidosCliente() {
+  //   const clienteId = this.authService.getUser()?.id; // id do cliente logado
+  //   if (!clienteId) return;
 
-    this.pedidoService.findAll().subscribe({
-      next: (pedidos) => {
-        // filtra apenas pedidos do cliente e ordena por ID decrescente
-        this.pedidos = pedidos
-          .filter((p) => p.cliente?.id === clienteId)
-          .sort((a, b) => b.id - a.id);
-      },
-      error: (erro) => console.error(erro),
-    });
-  }
+  //   this.pedidoService.findAll().subscribe({
+  //     next: (pedidos) => {
+  //       // filtra apenas pedidos do cliente e ordena por ID decrescente
+  //       this.pedidos = pedidos
+  //         .filter((p) => p.cliente?.id === clienteId)
+  //         .sort((a, b) => b.id - a.id);
+  //     },
+  //     error: (erro) => console.error(erro),
+  //   });
+  // }
 
   deletar(pedido: Pedido) {
     if (pedido.status.toLowerCase() === 'finalizado') {
@@ -78,7 +76,7 @@ export class MeuspedidosComponent {
               icon: 'success',
               confirmButtonText: 'Ok',
             });
-            this.findPedidosCliente();
+            // this.findPedidosCliente();
           },
           error: () =>
             Swal.fire({

@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
 export class LandingpageComponent implements AfterViewInit {
 
   // se quiser apontar para outra rota depois:
-  loginPath = '/login-cliente';
+  // loginPath = '/login-cliente';
+  loginPath = '/login';
 
   ngAfterViewInit(): void {
     // ====== Galeria (localStorage) ======

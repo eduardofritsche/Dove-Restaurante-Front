@@ -1,0 +1,53 @@
+<div class="login-background">
+
+  <div class="login-wrapper">
+    <!-- LOGO -->
+    <img src="/img/logo.png" class="login-logo" alt="Logo Restaurante Dove">
+  </div>
+
+  <div class="container" style="max-width: 480px">
+    <div class="card shadow login-card">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Login</h3>
+
+        <form (ngSubmit)="logar()">
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="Username" class="form-label">Username</label>
+            <input
+              id="uesername"
+              type="text"
+              class="form-control"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+
+          <!-- Senha com olho -->
+          <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+
+            <div class="password-input-container">
+              <input
+                id="password"
+                [type]="mostrarSenha ? 'text' : 'password'"
+                class="form-control"
+                [(ngModel)]="password"
+                name="password"
+                required
+              />
+
+              <span class="toggle-password" (click)="mostrarSenha = !mostrarSenha">
+                <i class="fa" [ngClass]="mostrarSenha ? 'fa-eye-slash' : 'fa-eye'"></i>
+              </span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

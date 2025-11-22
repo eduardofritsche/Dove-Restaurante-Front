@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../../services/cliente.service';
 import { Cliente } from '../../../models/cliente';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-logincliente',
@@ -19,15 +18,12 @@ export class LoginClienteComponent {
   mostrarSenha: boolean = false;
   router = inject(Router);
   clienteService = inject(ClienteService);
-  authService = inject(AuthService);
 
 
   loginCliente() {
     this.clienteService.findByEmail(this.email).subscribe({
       next: (cliente: Cliente) => {
         if (cliente && cliente.senha === this.senha) {
-          this.authService.setRole('CLIENTE');
-          this.authService.setUser(cliente);
 
           Swal.fire({
             title: 'Login realizado com sucesso!',

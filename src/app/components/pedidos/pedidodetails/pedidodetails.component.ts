@@ -8,7 +8,6 @@ import { CardapioService } from '../../../services/cardapio.service';
 import { IngredienteService } from '../../../services/ingrediente.service';
 import { Cardapio } from '../../../models/cardapio';
 import { Ingrediente } from '../../../models/ingrediente';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-pedidodetails',
@@ -23,7 +22,6 @@ export class PedidodetailsComponent {
   pedidoService = inject(PedidoService);
   cardapioService = inject(CardapioService);
   ingredienteService = inject(IngredienteService);
-  authService = inject(AuthService);
   activedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -40,17 +38,6 @@ export class PedidodetailsComponent {
   private prepareNewPedido() {
     // status padrão
     this.pedido.status = 'PREPARANDO';
-
-    // pegar usuário autenticado
-    const user = this.authService.getUser();
-
-    if (this.authService.isCliente() && user && 'email' in user) {
-      // Garantimos que é Cliente
-      this.pedido.cliente = user;
-    } else if (this.authService.isFuncionario() && user && 'cpf' in user) {
-      // Garantimos que é Funcionário
-      this.pedido.funcionario = user;
-    }
 
     // pegar cardápio do dia
     this.cardapioService.getCardapioDoDia().subscribe({
@@ -129,13 +116,7 @@ export class PedidodetailsComponent {
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
-          if (this.authService.isFuncionario()) {
-            this.router.navigate(['/admin/pedidos']);
-          } else if (this.authService.isCliente()) {
-            this.router.navigate(['/cliente/pedidos']);
-          } else {
-            this.router.navigate(['/']);
-          }
+          this.router.navigate(['/']);
         });
       },
       error: (erro) => console.error(erro),

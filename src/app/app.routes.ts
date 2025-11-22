@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 // Imports dos componentes de login e cadastro
+import { LoginComponent } from './components/layout/login/login.component';
 import { LoginClienteComponent } from './components/layout/logincliente/logincliente.component';
 import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
 import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
@@ -28,6 +29,7 @@ export const routes: Routes = [
 
   { path: 'landing-page', component: LandingpageComponent },
   // 🔹 Login / Cadastro
+  { path: 'login', component: LoginComponent },
   { path: 'login-cliente', component: LoginClienteComponent },
   { path: 'login-funcionario', component: LoginfuncionarioComponent },
   { path: 'cadastro-cliente', component: CadastroclienteComponent },

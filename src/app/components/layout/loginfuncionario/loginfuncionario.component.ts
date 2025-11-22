@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AuthService } from '../../../services/auth.service';
 import { Funcionario } from '../../../models/funcionario';
 import { FuncionarioService } from '../../../services/funcionario.service';
 
@@ -15,15 +14,12 @@ import { FuncionarioService } from '../../../services/funcionario.service';
 export class LoginfuncionarioComponent {
   cpf: string = '';
   router = inject(Router);
-  authService = inject(AuthService);
   funcionarioService = inject(FuncionarioService);
 
   loginFuncionario() {
     this.funcionarioService.findByCpf(this.cpf).subscribe({
       next: (funcionario: Funcionario | null) => {
         if (funcionario) {
-          this.authService.setRole('FUNCIONARIO');
-          this.authService.setUser(funcionario);
           Swal.fire({
             title: 'Login realizado com sucesso!',
             icon: 'success',
