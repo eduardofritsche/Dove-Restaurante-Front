@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { switchMap, throwError } from 'rxjs';
+import { of, switchMap, throwError } from 'rxjs';
 import { Cliente } from '../../../models/cliente';
 import { ClienteService } from '../../../services/cliente.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -42,6 +42,12 @@ export class CadastroclienteComponent {
     this.clienteservice
       .findByEmail(this.email.trim())
       .pipe(
+        catchError((err: any) => {
+          if (err.status === 404) {
+            return of(null);
+          }
+          return throwError(() => err);
+        }),
         switchMap((clienteExistente: Cliente | null) => {
           if (clienteExistente) {
             return throwError(() => new Error('EMAIL_JA_CADASTRADO'));
