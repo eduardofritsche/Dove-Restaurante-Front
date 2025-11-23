@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-API = "http://localhost:8080/api/usuario";
+API = "http://localhost:8080/api/usuarios";
 
   http = inject(HttpClient);
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API}/findAll`);
+    return this.http.get<any[]>(`${this.API}`);
   }
 
   findById(id: number): Observable<any> {
@@ -28,11 +28,11 @@ API = "http://localhost:8080/api/usuario";
   }
 
   save(usuario: any): Observable<any> {
-    return this.http.post<any>(`${this.API}/save`, usuario);
+    return this.http.post<any>(`${this.API}`, usuario);
   }
 
   update(id: number, usuario: any): Observable<any> {
-    return this.http.put<any>(`${this.API}/update/${id}`, usuario);
+    return this.http.put<any>(`${this.API}/${id}`, usuario);
   }
 
   trocarSenha(id: number, dadosSenha: any): Observable<any> {
@@ -40,7 +40,7 @@ API = "http://localhost:8080/api/usuario";
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/delete/${id}`);
+    return this.http.delete<void>(`${this.API}/${id}`);
   }
 
   findByNome(nome: string): Observable<any[]> {
