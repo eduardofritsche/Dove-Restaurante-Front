@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'landing-page', component: LandingpageComponent },
   // 🔹 Login / Cadastro
   { path: 'login', component: LoginComponent },
-  { path: 'login-cliente', component: LoginClienteComponent },
+  //{ path: 'login-cliente', component: LoginClienteComponent },
   { path: 'login-funcionario', component: LoginfuncionarioComponent },
   { path: 'cadastro-cliente', component: CadastroclienteComponent },
 
@@ -63,7 +63,7 @@ export const routes: Routes = [
       { path: 'admin/ingredientes/:id/edit', component: IngredienteDetailsComponent },
 
       // Redirecionamento padrão dentro do layout
-      { path: '', redirectTo: 'login-cliente', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
   // 🔹 Rota coringa → redireciona

@@ -18,17 +18,17 @@ import { Usuario } from '../../../models/usuario';
 })
 export class CadastroclienteComponent {
   nome: string = '';
+  cpf: string = '';
   email: string = '';
   senha: string = '';
   confirmarSenha: string = '';
   mostrarSenhaCadastro: boolean = false;
   usuarioService = inject(UsuarioService);
 
-  constructor(
-    private router: Router  ) {}
+  constructor(private router: Router) {}
 
   CadastroCliente(): void {
-    if (!this.nome?.trim() || !this.email?.trim() || !this.senha?.trim()) {
+    if (!this.nome?.trim() || !this.email?.trim() || !this.senha?.trim() || !this.cpf?.trim()) {
       Swal.fire({
         title: 'Preencha todos os campos obrigatórios.',
         icon: 'warning',
@@ -53,7 +53,9 @@ export class CadastroclienteComponent {
 
           const novoCliente: Partial<Usuario> = {
             nome: this.nome.trim(),
+            cpf: this.cpf.trim(),
             email: this.email.trim(),
+            username: this.email.trim(),
             senha: this.senha,
             tipo: 'CLIENTE',
           };
@@ -63,7 +65,6 @@ export class CadastroclienteComponent {
       )
       .subscribe({
         next: (clienteCriado: Cliente) => {
-
           Swal.fire({
             title: 'Cadastro realizado com sucesso!',
             icon: 'success',
@@ -92,6 +93,6 @@ export class CadastroclienteComponent {
   }
 
   abrirLoginCliente() {
-    this.router.navigate(['/login-cliente4']);
+    this.router.navigate(['/login']);
   }
 }

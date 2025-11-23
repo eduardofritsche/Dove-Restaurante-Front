@@ -12,6 +12,6 @@ export class MenuComponent {
   router = inject(Router);
 
   logout() {
-    this.router.navigate(['/login-cliente']);
+    this.router.navigate(['/login']);
   }
 }

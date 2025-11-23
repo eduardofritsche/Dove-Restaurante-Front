@@ -45,6 +45,6 @@ export class LoginfuncionarioComponent {
   }
 
   voltarLoginCliente() {
-    this.router.navigate(['/login-cliente']);
+    this.router.navigate(['/login']);
   }
 }
