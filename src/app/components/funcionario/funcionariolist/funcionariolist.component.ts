@@ -25,7 +25,7 @@ export class FuncionariolistComponent {
     this.usuarioService.findAll().subscribe({
       next: (usuarios) => {
         const funcionariosFiltrados = usuarios.filter(
-          (usuario) => usuario.role === 'FUNCIONARIOS'
+          (usuario) => usuario.tipo === 'FUNCIONARIO'
         );
         this.funcionarios = funcionariosFiltrados.sort(
           (a, b) => (b.id || 0) - (a.id || 0)
