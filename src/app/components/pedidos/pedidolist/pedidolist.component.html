@@ -18,7 +18,6 @@
         <th>Hora Início</th>
         <th>Hora Fim</th>
         <th>Cliente</th>
-        <th>Funcionário</th>
         <th>Cardápio</th>
         <th>Ações</th>
       </tr>
@@ -33,7 +32,6 @@
         <td>{{ pedido.status }} {{ getStatusIcon(pedido) }}</td>
         <td>{{ pedido.hora_inicio }}</td>
         <td>{{ pedido.hora_fim }}</td>
-        <td>{{ pedido.usuario?.nome }}</td>
         <td>{{ pedido.usuario?.nome }}</td>
         <td>{{ pedido.cardapio.data }}</td>
 

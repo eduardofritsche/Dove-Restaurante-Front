@@ -8,6 +8,8 @@ import { CardapioService } from '../../../services/cardapio.service';
 import { IngredienteService } from '../../../services/ingrediente.service';
 import { Cardapio } from '../../../models/cardapio';
 import { Ingrediente } from '../../../models/ingrediente';
+import { Usuario } from '../../../models/usuario';
+import { LoginService } from '../../../auth/login.service';
 
 @Component({
   selector: 'app-pedidodetails',
@@ -24,6 +26,7 @@ export class PedidodetailsComponent {
   ingredienteService = inject(IngredienteService);
   activedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  loginService = inject(LoginService);
 
   constructor() {
     const id = this.activedRoute.snapshot.params['id'];
@@ -32,8 +35,18 @@ export class PedidodetailsComponent {
     } else {
       // cadastro novo
       this.prepareNewPedido();
+      this.vincularClienteLogado();
     }
   }
+
+  private vincularClienteLogado() {
+    try {
+      const usuarioLogado: Usuario = this.loginService.getUsuarioLogado();
+      this.pedido.usuario = usuarioLogado;
+    } catch (error) {
+      console.error('Erro ao vincular usuário logado como cliente.', error);
+    }
+  }
 
   private prepareNewPedido() {
     // status padrão
