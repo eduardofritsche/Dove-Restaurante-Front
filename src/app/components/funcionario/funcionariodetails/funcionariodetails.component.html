@@ -1,91 +1,90 @@
 <div class="login-background">
-<div class="container mt-5" style="max-width: 480px">
-  <div class="card shadow">
-    <div class="card-body">
-      <h3 class="card-title text-center mb-4">Cadastro de Funcionario</h3>
+  <div class="container mt-5" style="max-width: 480px">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">
+          {{ id ? 'Edição de Funcionário' : 'Cadastro de Funcionário' }}
+        </h3>
 
-      <form (ngSubmit)="CadastroFuncionario()">
-
-        <!-- Nome -->
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome</label>
-          <input
-            id="nome"
-            type="text"
-            class="form-control"
-            [(ngModel)]="nome"
-            name="nome"
-            required
-          />
-        </div>
-
-                <!-- CPF -->
-        <div class="mb-3">
-          <label for="nome" class="form-label">CPF</label>
-          <input
-            id="CPF"
-            type="text"
-            class="form-control"
-            [(ngModel)]="cpf"
-            name="cpf"
-            required
-          />
-        </div>
-
-        <!-- Email -->
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            class="form-control"
-            [(ngModel)]="email"
-            name="email"
-            required
-          />
-        </div>
-
-        <!-- Senha com olho -->
-        <div class="mb-3">
-          <label for="senha" class="form-label">Senha</label>
-
-          <div class="password-input-container">
+        <form (ngSubmit)="salvarFuncionario()">
+          <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
             <input
-              id="senha"
-              [type]="mostrarSenhaCadastro ? 'text' : 'password'"
+              id="nome"
+              type="text"
               class="form-control"
-              [(ngModel)]="senha"
-              name="senha"
+              [(ngModel)]="nome"
+              name="nome"
               required
             />
-
-            <span
-              class="toggle-password"
-              (click)="mostrarSenhaCadastro = !mostrarSenhaCadastro"
-            >
-              <i
-                class="fa"
-                [ngClass]="mostrarSenhaCadastro ? 'fa-eye-slash' : 'fa-eye'"
-              ></i>
-            </span>
           </div>
-        </div>
 
-        <!-- Botão Cadastrar -->
-        <button type="submit" class="btn btn-outline-success w-100">
-          Cadastrar Cliente
-        </button>
+          <div class="mb-3">
+            <label for="nome" class="form-label">CPF</label>
+            <input
+              id="CPF"
+              type="text"
+              class="form-control"
+              [(ngModel)]="cpf"
+              name="cpf"
+              required
+            />
+          </div>
 
-        <!-- Link para login -->
-        <button
-          type="button"
-          class="btn btn-outline-secondary w-100 mt-2"
-          (click)="abrirLogin()"
-        >
-          Já tenho conta
-        </button>
-      </form>
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              class="form-control"
+              [(ngModel)]="email"
+              name="email"
+              required
+              [disabled]="!!id"
+            />
+            <div *ngIf="id" class="form-text">O e-mail não pode ser alterado após o cadastro.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="senha" class="form-label">
+              {{ id ? 'Nova Senha (deixe em branco para manter a anterior)' : 'Senha' }}
+            </label>
+
+            <div class="password-input-container">
+              <input
+                id="senha"
+                [type]="mostrarSenhaCadastro ? 'text' : 'password'"
+                class="form-control"
+                [(ngModel)]="senha"
+                name="senha"
+                [required]="!id"
+              />
+
+              <span
+                class="toggle-password"
+                (click)="mostrarSenhaCadastro = !mostrarSenhaCadastro"
+              >
+                <i
+                  class="fa"
+                  [ngClass]="mostrarSenhaCadastro ? 'fa-eye-slash' : 'fa-eye'"
+                ></i>
+              </span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-outline-success w-100">
+            {{ id ? 'Salvar Edição' : 'Cadastrar Funcionário' }}
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary w-100 mt-2"
+            (click)="abrirLogin()"
+          >
+            Voltar para Login
+          </button>
+        </form>
+      </div>
     </div>
   </div>
- </div>
 </div>

@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,8 @@ import { catchError, of, switchMap, throwError } from 'rxjs';
   templateUrl: './funcionariodetails.component.html',
   styleUrls: ['./funcionariodetails.component.scss'],
 })
-export class FuncionarioDetailsComponent {
+export class FuncionarioDetailsComponent implements OnInit {
+  id: number = 0;
   nome: string = '';
   cpf: string = '';
   email: string = '';
@@ -23,9 +24,42 @@ export class FuncionarioDetailsComponent {
   mostrarSenhaCadastro: boolean = false;
   usuarioService = inject(UsuarioService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  CadastroFuncionario(): void {
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.id = +params['id'];
+      if (this.id) {
+        this.usuarioService.findById(this.id).subscribe({
+          next: (funcionario: Usuario) => {
+            this.nome = funcionario.nome;
+            this.cpf = funcionario.cpf;
+            this.email = funcionario.email;
+            this.senha = '';
+          },
+          error: (err: any) => {
+            console.error('Erro ao carregar funcionário:', err);
+            Swal.fire({
+              title: 'Funcionário não encontrado.',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+            this.router.navigate(['/admin/funcionarios']);
+          },
+        });
+      }
+    });
+  }
+
+  salvarFuncionario(): void {
+    if (this.id) {
+      this.editarFuncionario();
+    } else {
+      this.cadastroFuncionario();
+    }
+  }
+
+  cadastroFuncionario(): void {
     if (
       !this.nome?.trim() ||
       !this.email?.trim() ||
@@ -93,6 +127,51 @@ export class FuncionarioDetailsComponent {
           }
         },
       });
+  }
+
+  editarFuncionario(): void {
+    if (
+      !this.nome?.trim() ||
+      !this.email?.trim() ||
+      !this.cpf?.trim()
+    ) {
+      Swal.fire({
+        title: 'Preencha os campos obrigatórios.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      });
+      return;
+    }
+
+    const funcionarioAtualizado: Partial<Usuario> = {
+      id: this.id,
+      nome: this.nome.trim(),
+      cpf: this.cpf.trim(),
+      email: this.email.trim(),
+      username: this.email.trim(),
+      ...(this.senha && { senha: this.senha }),
+      tipo: 'FUNCIONARIO',
+    };
+
+    this.usuarioService.update(this.id, funcionarioAtualizado).subscribe({
+      next: (usuarioAtualizado: Usuario) => {
+        Swal.fire({
+          title: 'Funcionário atualizado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+        this.router.navigate(['/admin/funcionarios']);
+      },
+      error: (err: any) => {
+        console.error('Erro na edição:', err);
+        Swal.fire({
+          title: 'Falha ao atualizar funcionário.',
+          text: 'Verifique se o e-mail não está em uso por outro usuário e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      },
+    });
   }
 
   abrirLogin() {

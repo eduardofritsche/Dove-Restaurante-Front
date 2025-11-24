@@ -4,11 +4,10 @@ import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
-
-API = "http://localhost:8080/api/usuarios";
+  API = 'http://localhost:8080/api/usuarios';
 
   http = inject(HttpClient);
 
@@ -17,7 +16,7 @@ API = "http://localhost:8080/api/usuarios";
   }
 
   findById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.API}/findById/${id}`);
+    return this.http.get<any>(`${this.API}/${id}`);
   }
 
   findPedidoById(id: number): Observable<number> {
@@ -52,9 +51,9 @@ API = "http://localhost:8080/api/usuarios";
     return this.http.get<any>(`${this.API}/findByEmail?email=${email}`);
   }
 
-    getRelatorio(id: number): Observable<any> {
-  return this.http.get<any>(`${this.API}/relatorio/${id}`);
-}
+  getRelatorio(id: number): Observable<any> {
+    return this.http.get<any>(`${this.API}/relatorio/${id}`);
+  }
 
   findByID(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.API}/findById/${id}`);
