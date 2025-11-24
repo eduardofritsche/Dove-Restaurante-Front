@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   login: Login = new Login();
@@ -22,43 +22,53 @@ export class LoginComponent {
 
   loginService = inject(LoginService);
 
-
-  constructor(){
+  constructor() {
     this.loginService.removerToken();
   }
 
-
   logar() {
+    this.loginService
+      .logar({ username: this.username, password: this.password })
+      .subscribe({
+        next: (token) => {
+          if (token) {
+            this.loginService.addToken(token);
 
-    this.loginService.logar({username: this.username, password: this.password}).subscribe({
-      next: token => {
+            const usuarioLogado = this.loginService.getUsuarioLogado();
 
-        if (token)
-          this.loginService.addToken(token); //MUITO IMPORTANTE
+            this.gerarToast().fire({
+              icon: 'success',
+              title: 'Seja bem-vindo!',
+            });
 
-        this.gerarToast().fire({ icon: "success", title: "Seja bem-vindo!" });
-        // this.router.navigate(['admin/dashboard']);
+            const userRole = usuarioLogado.tipo;
 
-        this.router.navigate(['/admin/pedidos']);
-      },
-      error: erro => {
-        Swal.fire('Usuário ou senha incorretos!', '', 'error');
-      }
-    });
-
+            if (userRole === 'FUNCIONARIO') {
+              this.router.navigate(['/admin/funcionarios']);
+            } else if (userRole === 'CLIENTE') {
+              this.router.navigate(['/cliente/pedidos']);
+            } else {
+              this.router.navigate(['/']);
+            }
+          }
+        },
+        error: (erro) => {
+          Swal.fire('Usuário ou senha incorretos!', '', 'error');
+        },
+      });
   }
 
   gerarToast() {
     return Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
   }
 }
