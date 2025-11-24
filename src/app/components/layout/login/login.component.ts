@@ -61,4 +61,8 @@ export class LoginComponent {
       }
     });
   }
+
+  abrirCadastro() {
+    this.router.navigate(['/cadastro-cliente']);
+  }
 }
