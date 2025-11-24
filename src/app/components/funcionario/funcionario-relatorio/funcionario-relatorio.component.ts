@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { Funcionario } from '../../../models/funcionario';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-funcionario-relatorio',
@@ -17,13 +16,13 @@ export class FuncionarioRelatorioComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private funcionarioService: FuncionarioService
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
     const funcionarioId = Number(this.route.snapshot.paramMap.get('id'));
     if (funcionarioId) {
-      this.funcionarioService.getRelatorio(funcionarioId).subscribe({
+      this.usuarioService.getRelatorio(funcionarioId).subscribe({
         next: (data) => {
           // converter strings "HH:mm:ss" para Date
           data.pedidos.forEach((p: any) => {

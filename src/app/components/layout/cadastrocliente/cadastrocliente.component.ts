@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { of, switchMap, throwError } from 'rxjs';
-import { Cliente } from '../../../models/cliente';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
@@ -64,7 +63,7 @@ export class CadastroclienteComponent {
         })
       )
       .subscribe({
-        next: (clienteCriado: Cliente) => {
+        next: (clienteCriado: Usuario) => {
           Swal.fire({
             title: 'Cadastro realizado com sucesso!',
             icon: 'success',

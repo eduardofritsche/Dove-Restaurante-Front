@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { Funcionario } from '../../../models/funcionario';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../models/usuario';
 
 @Component({
   selector: 'app-funcionario-details',
@@ -14,21 +14,26 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./funcionariodetails.component.scss'],
 })
 export class FuncionarioDetailsComponent implements OnInit {
-  funcionarioService = inject(FuncionarioService);
+  usuarioService = inject(UsuarioService);
   router = inject(Router);
   route = inject(ActivatedRoute);
 
-  funcionario: Funcionario = {
+  funcionario: Usuario = {
     nome: '',
     cpf: '',
     pedidos: [],
+    id: 0,
+    username: '',
+    email: '',
+    senha: '',
+    tipo: 'CLIENTE'
   };
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.funcionarioService.findByID(+id).subscribe({
-        next: (func: Funcionario) => (this.funcionario = func),
+      this.usuarioService.findByID(+id).subscribe({
+        next: (func: Usuario) => (this.funcionario = func),
         error: (err) => console.error(err),
       });
     }
@@ -37,7 +42,7 @@ export class FuncionarioDetailsComponent implements OnInit {
   salvar() {
     if (this.funcionario.id == null) {
       // Criar funcionário
-      this.funcionarioService.create(this.funcionario).subscribe({
+      this.usuarioService.save(this.funcionario).subscribe({
         next: () => {
           Swal.fire({
             title: 'Funcionário salvo com sucesso!',
@@ -57,7 +62,7 @@ export class FuncionarioDetailsComponent implements OnInit {
       });
     } else {
       // Editar funcionário
-      this.funcionarioService.update(this.funcionario).subscribe({
+      this.usuarioService.update(this.funcionario.id, this.funcionario).subscribe({
         next: () => {
           Swal.fire({
             title: 'Funcionário editado com sucesso!',

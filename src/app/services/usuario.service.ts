@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,13 @@ API = "http://localhost:8080/api/usuarios";
 
   findByEmail(email: string): Observable<any> {
     return this.http.get<any>(`${this.API}/findByEmail?email=${email}`);
+  }
+
+    getRelatorio(id: number): Observable<any> {
+  return this.http.get<any>(`${this.API}/relatorio/${id}`);
+}
+
+  findByID(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.API}/findById/${id}`);
   }
 }

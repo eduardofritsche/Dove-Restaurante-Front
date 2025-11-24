@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 
 // Imports dos componentes de login e cadastro
 import { LoginComponent } from './components/layout/login/login.component';
-import { LoginClienteComponent } from './components/layout/logincliente/logincliente.component';
-import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
 import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
 import { LandingpageComponent }  from './components/layout/landingpage/landingpage.component';
 import { TrocarSenhaComponent } from './components/cliente/trocarsenha/trocarsenha.component';
@@ -31,7 +29,6 @@ export const routes: Routes = [
   // 🔹 Login / Cadastro
   { path: 'login', component: LoginComponent },
   //{ path: 'login-cliente', component: LoginClienteComponent },
-  { path: 'login-funcionario', component: LoginfuncionarioComponent },
   { path: 'cadastro-cliente', component: CadastroclienteComponent },
 
   // Layout principal
