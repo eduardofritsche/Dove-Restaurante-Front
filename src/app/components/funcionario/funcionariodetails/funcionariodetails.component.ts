@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario';
+import { catchError, of, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-funcionario-details',
@@ -13,73 +14,88 @@ import { Usuario } from '../../../models/usuario';
   templateUrl: './funcionariodetails.component.html',
   styleUrls: ['./funcionariodetails.component.scss'],
 })
-export class FuncionarioDetailsComponent implements OnInit {
+export class FuncionarioDetailsComponent {
+  nome: string = '';
+  cpf: string = '';
+  email: string = '';
+  senha: string = '';
+  confirmarSenha: string = '';
+  mostrarSenhaCadastro: boolean = false;
   usuarioService = inject(UsuarioService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
 
-  funcionario: Usuario = {
-    nome: '',
-    cpf: '',
-    pedidos: [],
-    id: 0,
-    username: '',
-    email: '',
-    senha: '',
-    tipo: 'CLIENTE'
-  };
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.usuarioService.findByID(+id).subscribe({
-        next: (func: Usuario) => (this.funcionario = func),
-        error: (err) => console.error(err),
+  CadastroFuncionario(): void {
+    if (
+      !this.nome?.trim() ||
+      !this.email?.trim() ||
+      !this.senha?.trim() ||
+      !this.cpf?.trim()
+    ) {
+      Swal.fire({
+        title: 'Preencha todos os campos obrigatórios.',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
       });
+      return;
     }
+
+    this.usuarioService
+      .findByEmail(this.email.trim())
+      .pipe(
+        catchError((err: any) => {
+          if (err.status === 404) {
+            return of(null);
+          }
+          return throwError(() => err);
+        }),
+        switchMap((usuarioExistente: Usuario | null) => {
+          if (usuarioExistente) {
+            return throwError(() => new Error('EMAIL_JA_CADASTRADO'));
+          }
+
+          const novoFuncionario: Partial<Usuario> = {
+            nome: this.nome.trim(),
+            cpf: this.cpf.trim(),
+            email: this.email.trim(),
+            username: this.email.trim(),
+            senha: this.senha,
+            tipo: 'FUNCIONARIO',
+          };
+
+          return this.usuarioService.save(novoFuncionario);
+        })
+      )
+      .subscribe({
+        next: (usuarioCriado: Usuario) => {
+          Swal.fire({
+            title: 'Cadastro realizado com sucesso!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+
+          this.router.navigate(['/admin/funcionarios']);
+        },
+        error: (err: any) => {
+          if (err?.message === 'EMAIL_JA_CADASTRADO' || err?.status === 409) {
+            Swal.fire({
+              title: 'E-mail já cadastrado!',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          } else {
+            Swal.fire({
+              title: 'Falha ao cadastrar funcionário.',
+              text: 'Tente novamente mais tarde.',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          }
+        },
+      });
   }
 
-  salvar() {
-    if (this.funcionario.id == null) {
-      // Criar funcionário
-      this.usuarioService.save(this.funcionario).subscribe({
-        next: () => {
-          Swal.fire({
-            title: 'Funcionário salvo com sucesso!',
-            icon: 'success',
-            confirmButtonText: 'Ok',
-          });
-          this.router.navigate(['/admin/funcionarios']);
-        },
-        error: (erro) => {
-          console.error(erro);
-          Swal.fire({
-            title: 'Erro ao salvar funcionário!',
-            icon: 'error',
-            confirmButtonText: 'Ok',
-          });
-        },
-      });
-    } else {
-      // Editar funcionário
-      this.usuarioService.update(this.funcionario.id, this.funcionario).subscribe({
-        next: () => {
-          Swal.fire({
-            title: 'Funcionário editado com sucesso!',
-            icon: 'success',
-            confirmButtonText: 'Ok',
-          });
-          this.router.navigate(['/admin/funcionarios']);
-        },
-        error: (erro) => {
-          console.error(erro);
-          Swal.fire({
-            title: 'Erro ao editar funcionário!',
-            icon: 'error',
-            confirmButtonText: 'Ok',
-          });
-        },
-      });
-    }
+  abrirLogin() {
+    this.router.navigate(['/login']);
   }
 }

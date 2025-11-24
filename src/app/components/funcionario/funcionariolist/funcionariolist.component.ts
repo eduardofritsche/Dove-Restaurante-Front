@@ -20,11 +20,16 @@ export class FuncionariolistComponent {
   ngOnInit(): void {
     this.findAll();
   }
-
+  
   findAll() {
     this.usuarioService.findAll().subscribe({
-      next: (funcionarios) => {
-        this.funcionarios = funcionarios.sort((a, b) => (b.id || 0) - (a.id || 0));
+      next: (usuarios) => {
+        const funcionariosFiltrados = usuarios.filter(
+          (usuario) => usuario.role === 'FUNCIONARIOS'
+        );
+        this.funcionarios = funcionariosFiltrados.sort(
+          (a, b) => (b.id || 0) - (a.id || 0)
+        );
       },
       error: (error) => {
         console.error(error);
