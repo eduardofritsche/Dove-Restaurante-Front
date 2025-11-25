@@ -14,8 +14,21 @@
             id="nome"
             type="text"
             class="form-control"
-            [(ngModel)]="funcionario.nome"
+            [(ngModel)]="nome"
             name="nome"
+            required
+          />
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Nome de Usuário</label>
+          <input
+            id="username"
+            type="text"
+            class="form-control"
+            [(ngModel)]="username"
+            name="username"
             required
           />
         </div>
@@ -27,10 +40,49 @@
             id="cpf"
             type="text"
             class="form-control"
-            [(ngModel)]="funcionario.cpf"
+            [(ngModel)]="cpf"
             name="cpf"
             required
           />
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </div>
+
+        <!-- Senha com olho -->
+        <div class="mb-3">
+          <label for="senha" class="form-label">Senha</label>
+
+          <div class="password-input-container">
+            <input
+              id="senha"
+              [type]="mostrarSenhaCadastro ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="senha"
+              name="senha"
+              required
+            />
+
+            <span
+              class="toggle-password"
+              (click)="mostrarSenhaCadastro = !mostrarSenhaCadastro"
+            >
+              <i
+                class="fa"
+                [ngClass]="mostrarSenhaCadastro ? 'fa-eye-slash' : 'fa-eye'"
+              ></i>
+            </span>
+          </div>
         </div>
 
         <!-- Botões -->
