@@ -20,6 +20,7 @@ import { FuncionarioDetailsComponent } from './components/funcionario/funcionari
 import { FuncionarioRelatorioComponent } from './components/funcionario/funcionario-relatorio/funcionario-relatorio.component';
 import { IngredientelistComponent } from './components/ingrediente/ingredientelist/ingredientelist.component';
 import { IngredienteDetailsComponent } from './components/ingrediente/ingredientedetails/ingredientedetails.component';
+import { loginGuardAdmin, loginGuardFuncionario } from './auth/login.guard';
 
 export const routes: Routes = [
   // Rota padrão → Landing page
@@ -50,6 +51,7 @@ export const routes: Routes = [
       // Área do admin
       { 
         path: 'admin',
+        canActivate: [loginGuardAdmin],
         children: [
           { path: 'funcionarios', component: FuncionariolistComponent },
           { path: 'funcionarios/new', component: FuncionarioDetailsComponent },
@@ -60,6 +62,7 @@ export const routes: Routes = [
       // Área do funcionario
       { 
         path: 'funcionario',
+        canActivate: [loginGuardFuncionario],
         children: [
           { path: 'cardapios', component: CardapiolistComponent },
           { path: 'cardapios/new', component: CardapiodetailsComponent },
