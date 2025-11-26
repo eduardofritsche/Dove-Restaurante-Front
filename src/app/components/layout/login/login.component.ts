@@ -43,7 +43,7 @@ export class LoginComponent {
 
             const userRole = usuarioLogado.tipo;
 
-            if (userRole === 'FUNCIONARIO') {
+            if (userRole === 'FUNCIONARIO' || userRole === 'ADMIN') {
               this.router.navigate(['/admin/funcionarios']);
             } else if (userRole === 'CLIENTE') {
               this.router.navigate(['/cliente/pedidos']);
