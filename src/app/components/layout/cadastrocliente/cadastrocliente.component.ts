@@ -18,6 +18,7 @@ import { Usuario } from '../../../models/usuario';
 export class CadastroclienteComponent {
   nome: string = '';
   cpf: string = '';
+  username: string = '';
   email: string = '';
   senha: string = '';
   confirmarSenha: string = '';
@@ -27,7 +28,7 @@ export class CadastroclienteComponent {
   constructor(private router: Router) {}
 
   CadastroCliente(): void {
-    if (!this.nome?.trim() || !this.email?.trim() || !this.senha?.trim() || !this.cpf?.trim()) {
+    if (!this.nome?.trim() || !this.email?.trim() || !this.username || !this.senha?.trim() || !this.cpf?.trim()) {
       Swal.fire({
         title: 'Preencha todos os campos obrigatórios.',
         icon: 'warning',
@@ -54,7 +55,7 @@ export class CadastroclienteComponent {
             nome: this.nome.trim(),
             cpf: this.cpf.trim(),
             email: this.email.trim(),
-            username: this.email.trim(),
+            username: this.username.trim(),
             senha: this.senha,
             tipo: 'CLIENTE',
           };
