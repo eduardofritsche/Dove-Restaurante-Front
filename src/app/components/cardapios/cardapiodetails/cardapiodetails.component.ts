@@ -94,7 +94,7 @@ export class CardapiodetailsComponent {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/admin/cardapios']);
+          this.router.navigate(['/funcionario/cardapios']);
         },
         error: (erro) => {
           if (erro.status === 400 || erro.status === 409) {
@@ -117,7 +117,7 @@ export class CardapiodetailsComponent {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/admin/cardapios']);
+          this.router.navigate(['/funcionario/cardapios']);
         },
         error: (erro) => {
           console.error(erro);

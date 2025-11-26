@@ -46,7 +46,7 @@ export class IngredienteDetailsComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/admin/ingredientes']);
+          this.router.navigate(['/funcionario/ingredientes']);
         },
         error: (erro) => {
           console.error(erro);
@@ -66,7 +66,7 @@ export class IngredienteDetailsComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
-          this.router.navigate(['/admin/ingredientes']);
+          this.router.navigate(['/funcionario/ingredientes']);
         },
         error: (erro) => {
           console.error(erro);
