@@ -95,7 +95,14 @@ export class PedidolistComponent {
 
     // altera o status e define a hora_fim
     pedido.status = 'FINALIZADO';
-    pedido.hora_fim = new Date().toLocaleTimeString(); // define hora fim como a hora atual
+
+    // hora de fim
+    const agora = new Date();
+    pedido.hora_fim = agora.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    }); // HH:mm:ss
 
     // atualiza no backend
     this.pedidoService.update(pedido).subscribe({
