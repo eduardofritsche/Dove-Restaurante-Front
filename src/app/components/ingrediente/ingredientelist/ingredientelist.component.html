@@ -1,7 +1,7 @@
 <div class="container ingrediente-list">
   <h1>Listagem de Ingredientes</h1>
   <br />
-  <button class="btn btn-primary" [routerLink]="['/admin/ingredientes', 'new']">
+  <button class="btn btn-primary" [routerLink]="['/funcionario/ingredientes', 'new']">
     Novo Ingrediente
   </button>
 
@@ -22,7 +22,7 @@
           <!-- Editar -->
           <button
             class="btn btn-info me-2"
-            [routerLink]="['/admin/ingredientes', ingrediente.id, 'edit']"
+            [routerLink]="['/funcionario/ingredientes', ingrediente.id, 'edit']"
           >
             Editar
           </button>
