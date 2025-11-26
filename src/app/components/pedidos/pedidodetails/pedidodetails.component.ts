@@ -40,13 +40,13 @@ export class PedidodetailsComponent {
   }
 
   private vincularClienteLogado() {
-    try {
-      const usuarioLogado: Usuario = this.loginService.getUsuarioLogado();
-      this.pedido.usuario = usuarioLogado;
-    } catch (error) {
-      console.error('Erro ao vincular usuário logado como cliente.', error);
-    }
-  }
+     try {
+      const usuarioLogado: Usuario = this.loginService.getUsuarioLogado();
+      this.pedido.usuario = usuarioLogado;
+    } catch (error) {
+      console.error('Erro ao vincular usuário logado como cliente.', error);
+    }
+  }
 
   private prepareNewPedido() {
     // status padrão
@@ -129,7 +129,7 @@ export class PedidodetailsComponent {
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/funcionario/pedidos']);
         });
       },
       error: (erro) => console.error(erro),
