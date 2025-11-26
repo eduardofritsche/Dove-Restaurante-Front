@@ -1,0 +1,209 @@
+$accent: #FFA500;
+$accent-dark: #cc8400;
+$radius: 14px;
+$shadow-strong: 0 10px 26px rgba(0, 0, 0, 0.18);
+$shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+/* Fundo com degradê sem scroll */
+.login-background {
+  width: 100%;
+  overflow: hidden;            /* remove barra de rolagem */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;     /* centraliza verticalmente */
+  align-items: center;
+  padding: 0;                  /* remove espaço que causava overflow */
+}
+
+/* Área da logo */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;         /* reduzido para evitar overflow */
+}
+
+/* Logo */
+.login-logo {
+  width: 150px;                /* ajustado para não ultrapassar */
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.18));
+  animation: fadeIn 0.6s ease, float 4s ease-in-out infinite;
+}
+
+/* Container central */
+.container {
+  max-width: 500px !important;
+  margin: 0 auto;
+}
+
+/* Card */
+.login-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: $shadow-strong;
+  animation: fadeIn 0.7s ease-out;
+  background: #ffffff;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/* Título */
+.card-title {
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #0b0c0f;
+  letter-spacing: .3px;
+  margin-bottom: 1.8rem;
+  text-align: center;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,.9), $accent);
+    border-radius: 2px;
+  }
+}
+
+/* Texto e Campos */
+.form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-control {
+  border-radius: $radius;
+  padding: .65rem .85rem;
+  border: 1px solid rgba(0,0,0,.15);
+  background: #f7f8fa;
+  color: #0b0c0f;
+  transition: 0.2s ease;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 3px rgba(255,165,0,0.35);
+  }
+}
+
+/* Campo Senha com Olho */
+.password-input-container {
+  position: relative;
+}
+
+.password-input-container input {
+  padding-right: 45px !important;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 1.1rem;
+  transition: 0.2s;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+/* Botão principal */
+.btn-primary {
+  background: $accent !important;
+  border: 1px solid white !important;
+  color: white !important;
+  font-weight: 700;
+  letter-spacing: .3px;
+  padding: .7rem 1rem;
+  border-radius: $radius;
+  box-shadow: $shadow-soft;
+  transition: 0.22s ease;
+
+  &:hover {
+    background: rgba(255,255,255,.88) !important;
+    color: $accent-dark !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(255,165,0,.35);
+  }
+}
+
+.password-strength {
+  font-weight: 600;
+  margin-bottom: 5px;
+
+  &.text-danger { color: red; }
+  &.text-warning { color: #b8860b; }
+  &.text-success { color: green; }
+}
+
+.password-rules {
+  list-style: none;
+  padding-left: 5px;
+  margin-top: 5px;
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  .text-success {
+    font-weight: 600;
+    color: #28a745 !important;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.btn-voltar {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+
+  background: transparent;
+  border: none;
+  color: $accent-dark;
+  font-size: 1rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    color: $accent;
+    transform: translateX(-3px);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
