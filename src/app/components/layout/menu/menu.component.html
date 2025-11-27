@@ -40,11 +40,11 @@
 
         <!-- APENAS CLIENTES -->
         @if (loginService.hasRole('CLIENTE')) {
-          <li class="nav-item">
-            <a class="nav-link" href="/cliente/perfil">Perfil</a>
-          </li>
            <li class="nav-item">
             <a class="nav-link" href="/cliente/pedidos">Pedidos</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="/cliente/perfil">Perfil</a>
           </li>
         } 
       </ul>

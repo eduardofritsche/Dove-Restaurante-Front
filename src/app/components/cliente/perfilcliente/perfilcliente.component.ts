@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { Usuario } from '../../../models/usuario';
 import { LoginService } from '../../../auth/login.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'perfil-cliente',
@@ -9,17 +9,27 @@ import { LoginService } from '../../../auth/login.service';
   styleUrls: ['./perfilcliente.component.scss']
 })
 export class PerfilclienteComponent implements OnInit {
+
   cliente: Usuario | null = null;
 
-  private loginService = inject(LoginService);
-  private router = inject(Router);
+  loginService = inject(LoginService);
+  http = inject(HttpClient);
+
+  API = "http://localhost:8080/api/usuarios";
 
   ngOnInit() {
-    this.cliente = this.loginService.getUsuarioLogado() as Usuario;
+    const usuario = this.loginService.getUsuarioLogado() as Usuario;
+
+    if (usuario?.id) {
+      this.http.get<Usuario>(`${this.API}/${usuario.id}`)
+        .subscribe({
+          next: res => { this.cliente = res; },
+          error: err => console.error("Erro ao buscar cliente:", err)
+        });
+    }
   }
 
   abrirTrocarSenha() {
-    // navega para a rota definida: /cliente/senha
-    this.router.navigate(['/cliente/senha']);
+    window.location.href = "/cliente/senha";
   }
 }
