@@ -1,0 +1,141 @@
+/* ==============================
+   TÍTULO "Meus Pedidos"
+============================== */
+
+.container > h1 {
+  font-weight: 800;
+  letter-spacing: .2px;
+  margin-top: .5rem;
+  margin-bottom: .25rem;
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: -6px;
+    bottom: -8px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,.85), #FFA500);
+    border-radius: 2px;
+  }
+}
+
+// Botão "Novo Ingrediente"
+  .container> .btn.btn-primary {
+    margin-top: 3.5rem;
+    border-radius: 10px;
+    background: #FFA500 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,.15);
+
+    &:hover {
+      background: rgba(255,255,255,.88) !important;
+      color: #cc8400 !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.32);
+    }
+  }
+
+
+.table {
+  color: #0b0c0f !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+.table thead th {
+  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  color: #555;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  border-bottom-color: rgba(0,0,0,.12) !important;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background: #fffaf1 !important;
+}
+
+.table tbody tr:hover {
+  background: #fff4e0 !important;
+  box-shadow: inset 3px 0 0 0 #FFA500;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  color: #0b0c0f !important;
+}
+
+
+.status.badge {
+  background: rgba(#FFA500, .14);
+  color: #FFA500;
+  border: 1px solid rgba(#FFA500, .35);
+  border-radius: 999px;
+  padding: .28rem .55rem;
+  font-weight: 600;
+  font-size: .82rem;
+}
+
+
+
+.table .btn {
+  padding: .38rem .7rem;
+  border-radius: 10px;
+  transition: .2s ease;
+}
+
+/* Botão editar → Laranja */
+.btn-info {
+  background: #FFA500 !important;
+  color: white !important;
+  border: 1px solid white !important;
+
+  &:hover {
+    background: rgba(255,255,255,.88) !important;
+    color: #c97a00 !important;
+  }
+}
+
+/* Botão excluir → Vermelho com hover branco */
+.btn-danger {
+  background: #dc3545 !important;
+  border: 1px solid white !important;
+  color: white !important;
+
+  &:hover {
+    background: rgba(255,255,255,.88) !important;
+    color: red !important;
+  }
+}
+
+.actions-col .btn {
+  margin-right: .5rem;
+}
+
+.actions-col .btn:last-child {
+  margin-right: 0;
+}
+
+
+@media (max-width: 576px) {
+  .table {
+    font-size: .92rem;
+  }
+  .table .btn {
+    padding: .34rem .6rem;
+  }
+}

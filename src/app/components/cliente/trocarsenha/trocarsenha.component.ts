@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -26,7 +26,7 @@ type Regras = {
 })
 export class TrocarSenhaComponent implements OnInit {
 
-  clienteId?: number;
+  usuarioId?: number;
 
   senhaAtual = '';
   novaSenha = '';
@@ -42,30 +42,34 @@ export class TrocarSenhaComponent implements OnInit {
   rotuloForca = 'Fraca';
   classeForca = 'text-danger';
 
-  private readonly API = '/api/cliente';
+  // API CORRETA
+  private readonly API = '/api/usuario';
+
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
+    // Pega ID da rota
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
-      this.clienteId = Number(idParam);
+      this.usuarioId = Number(idParam);
       return;
     }
 
+    // Pega ID do token decodificado
     try {
-      const raw = localStorage.getItem('app.user');
+      const raw = localStorage.getItem('token');
       if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed?.id) {
-          this.clienteId = Number(parsed.id);
+        const token = JSON.parse(atob(raw.split('.')[1])); // decodifica payload
+        if (token?.id) {
+          this.usuarioId = Number(token.id);
           return;
         }
       }
     } catch {}
 
     Swal.fire({
-      title: 'Não foi possível identificar o cliente (id ausente).',
+      title: 'Não foi possível identificar o usuário.',
       icon: 'error',
       confirmButtonText: 'OK',
     });
@@ -73,7 +77,7 @@ export class TrocarSenhaComponent implements OnInit {
 
   podeSalvar(): boolean {
     return (
-      !!this.clienteId &&
+      !!this.usuarioId &&
       !!this.senhaAtual &&
       !!this.novaSenha &&
       !!this.confirmarSenha &&
@@ -92,6 +96,7 @@ export class TrocarSenhaComponent implements OnInit {
       Number(this.regras.lower) +
       Number(this.regras.number) +
       Number(this.regras.special);
+
     return this.regras.minLen && classes >= 3;
   }
 
@@ -125,25 +130,26 @@ export class TrocarSenhaComponent implements OnInit {
   }
 
   voltarParaPerfil() {
-  window.history.back(); 
+    window.history.back();
   }
 
   trocarSenha(): void {
     this.submitted = true;
 
-    if (!this.clienteId) {
-      Swal.fire({ title: 'Não foi possível identificar o cliente (id ausente).', icon: 'error', confirmButtonText: 'OK' });
+    if (!this.usuarioId) {
+      Swal.fire({ title: 'Usuário não identificado.', icon: 'error', confirmButtonText: 'OK' });
       return;
     }
 
     if (!this.podeSalvar()) {
-      Swal.fire({ title: 'Preencha os campos corretamente antes de salvar.', icon: 'warning', confirmButtonText: 'OK' });
+      Swal.fire({ title: 'Preencha tudo corretamente.', icon: 'warning', confirmButtonText: 'OK' });
       return;
     }
 
     this.loading = true;
 
-    const url = `${this.API}/senha/${this.clienteId}`;
+    // Agora usando /usuario/senha/{id}
+    const url = `${this.API}/senha/${this.usuarioId}`;
     const body = {
       senhaAtual: this.senhaAtual.trim(),
       novaSenha: this.novaSenha.trim(),
@@ -153,7 +159,7 @@ export class TrocarSenhaComponent implements OnInit {
     this.http.put<void>(url, body).subscribe({
       next: () => {
         this.loading = false;
-        Swal.fire({ title: 'Senha alterada com sucesso.', icon: 'success', confirmButtonText: 'OK' });
+        Swal.fire({ title: 'Senha alterada!', icon: 'success', confirmButtonText: 'OK' });
         this.senhaAtual = '';
         this.novaSenha = '';
         this.confirmarSenha = '';
@@ -168,18 +174,11 @@ export class TrocarSenhaComponent implements OnInit {
           return;
         }
         if (err.status === 404) {
-          Swal.fire({ title: 'Cliente não encontrado.', icon: 'error', confirmButtonText: 'OK' });
+          Swal.fire({ title: 'Usuário não encontrado.', icon: 'error', confirmButtonText: 'OK' });
           return;
         }
-        if (err.status === 400) {
-          const msg =
-            err.error?.message ||
-            err.error?.error ||
-            'Requisição inválida.';
-          Swal.fire({ title: msg, icon: 'error', confirmButtonText: 'OK' });
-          return;
-        }
-        Swal.fire({ title: 'Erro ao alterar a senha.', icon: 'error', confirmButtonText: 'OK' });
+
+        Swal.fire({ title: 'Erro ao alterar senha.', icon: 'error', confirmButtonText: 'OK' });
       },
     });
   }
