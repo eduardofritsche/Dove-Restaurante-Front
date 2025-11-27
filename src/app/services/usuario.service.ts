@@ -51,6 +51,10 @@ export class UsuarioService {
     return this.http.get<any>(`${this.API}/findByEmail?email=${email}`);
   }
 
+  findByUsername(username: string): Observable<any> {
+    return this.http.get<any>(`${this.API}/findByUsername?username=${username}`);
+  }
+
   getRelatorio(id: number): Observable<any> {
     return this.http.get<any>(`${this.API}/relatorio/${id}`);
   }
