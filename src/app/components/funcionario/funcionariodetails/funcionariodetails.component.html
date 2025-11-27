@@ -32,6 +32,18 @@
           </div>
 
           <div class="mb-3">
+            <label for="username" class="form-label">Nome de Usuário</label>
+            <input
+              id="username"
+              type="text"
+              class="form-control"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
             <input
               id="email"

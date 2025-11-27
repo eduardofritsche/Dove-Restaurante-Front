@@ -66,10 +66,9 @@ export class CadastroclienteComponent {
     )
     .subscribe({
       next: (clienteCriado: Usuario) => {
-        // Criando objeto Login do jeito EXATO que o service precisa
         const login: Login = {
           username: this.username.trim(),
-          password: this.senha.trim()  // <<-- precisa ser password
+          password: this.senha.trim()
         };
 
         this.loginService.logar(login).subscribe({
@@ -83,7 +82,6 @@ export class CadastroclienteComponent {
               confirmButtonText: 'Ok',
             });
 
-            // Agora tem token e permissão
             this.router.navigate(['/cliente/pedidos']);
           },
           error: () => {

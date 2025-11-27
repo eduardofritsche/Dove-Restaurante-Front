@@ -18,6 +18,7 @@ export class FuncionarioDetailsComponent implements OnInit {
   id: number = 0;
   nome: string = '';
   cpf: string = '';
+  username: string = '';
   email: string = '';
   senha: string = '';
   confirmarSenha: string = '';
@@ -34,6 +35,7 @@ export class FuncionarioDetailsComponent implements OnInit {
           next: (funcionario: Usuario) => {
             this.nome = funcionario.nome;
             this.cpf = funcionario.cpf;
+            this.username = funcionario.username;
             this.email = funcionario.email;
             this.senha = '';
           },
@@ -64,6 +66,7 @@ export class FuncionarioDetailsComponent implements OnInit {
       !this.nome?.trim() ||
       !this.email?.trim() ||
       !this.senha?.trim() ||
+      !this.username?.trim() ||
       !this.cpf?.trim()
     ) {
       Swal.fire({
@@ -75,7 +78,7 @@ export class FuncionarioDetailsComponent implements OnInit {
     }
 
     this.usuarioService
-      .findByEmail(this.email.trim())
+      .findByUsername(this.username.trim())
       .pipe(
         catchError((err: any) => {
           if (err.status === 404) {
@@ -85,14 +88,14 @@ export class FuncionarioDetailsComponent implements OnInit {
         }),
         switchMap((usuarioExistente: Usuario | null) => {
           if (usuarioExistente) {
-            return throwError(() => new Error('EMAIL_JA_CADASTRADO'));
+            return throwError(() => new Error('USERNAME_JA_CADASTRADO'));
           }
 
           const novoFuncionario: Partial<Usuario> = {
             nome: this.nome.trim(),
             cpf: this.cpf.trim(),
             email: this.email.trim(),
-            username: this.email.trim(),
+            username: this.username.trim(),
             senha: this.senha,
             tipo: 'FUNCIONARIO',
           };
@@ -111,9 +114,9 @@ export class FuncionarioDetailsComponent implements OnInit {
           this.router.navigate(['/admin/funcionarios']);
         },
         error: (err: any) => {
-          if (err?.message === 'EMAIL_JA_CADASTRADO' || err?.status === 409) {
+          if (err?.message === 'USERNAME_JA_CADASTRADO' || err?.status === 409) {
             Swal.fire({
-              title: 'E-mail já cadastrado!',
+              title: 'Username já cadastrado!',
               icon: 'error',
               confirmButtonText: 'Ok',
             });
@@ -133,6 +136,7 @@ export class FuncionarioDetailsComponent implements OnInit {
     if (
       !this.nome?.trim() ||
       !this.email?.trim() ||
+      !this.username?.trim() ||
       !this.cpf?.trim()
     ) {
       Swal.fire({
