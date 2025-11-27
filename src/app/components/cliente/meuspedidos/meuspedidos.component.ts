@@ -5,6 +5,7 @@ import { PedidoService } from '../../../services/pedido.service';
 import { Cardapio } from '../../../models/cardapio';
 import { CardapioService } from '../../../services/cardapio.service';
 import { RouterLink } from '@angular/router';
+import { LoginService } from '../../../auth/login.service';
 
 @Component({
   selector: 'app-meuspedidos',
@@ -15,18 +16,19 @@ import { RouterLink } from '@angular/router';
 export class MeuspedidosComponent {
   pedidoService = inject(PedidoService);
   cardapioService = inject(CardapioService);
+  loginService = inject(LoginService);
   cardapioDoDia: Cardapio | null = null;
   pedidos: Pedido[] = [];
 
   ngOnInit(): void {
-    // this.findPedidosCliente();
+    this.findPedidosCliente();
     this.carregarCardapioDoDia();
   }
 
   carregarCardapioDoDia() {
     this.cardapioService.getCardapioDoDia().subscribe({
       next: (cardapio) => {
-        console.log(cardapio.id);
+        // console.log(cardapio.id);
         this.cardapioDoDia = cardapio;
       },
       error: (err) => {
@@ -36,20 +38,25 @@ export class MeuspedidosComponent {
     });
   }
 
-  // findPedidosCliente() {
-  //   const clienteId = this.authService.getUser()?.id; // id do cliente logado
-  //   if (!clienteId) return;
+  findPedidosCliente() {
+    const cliente = this.loginService.getUsuarioLogado();
+    // console.log(cliente, cliente.id);
+    if (!cliente.id) return;
 
-  //   this.pedidoService.findAll().subscribe({
-  //     next: (pedidos) => {
-  //       // filtra apenas pedidos do cliente e ordena por ID decrescente
-  //       this.pedidos = pedidos
-  //         .filter((p) => p.cliente?.id === clienteId)
-  //         .sort((a, b) => b.id - a.id);
-  //     },
-  //     error: (erro) => console.error(erro),
-  //   });
-  // }
+    this.pedidoService.findAll().subscribe({
+      next: (pedidos) => {
+        // filtra apenas pedidos do cliente e ordena por ID decrescente
+        this.pedidos = pedidos
+          .filter((p) => {
+            console.log(typeof p.usuario.id);
+            return p.usuario?.id === Number(cliente.id);
+          })
+          .sort((a, b) => b.id - a.id);
+        console.log(this.pedidos);
+      },
+      error: (erro) => console.error(erro),
+    });
+  }
 
   deletar(pedido: Pedido) {
     if (pedido.status.toLowerCase() === 'finalizado') {
