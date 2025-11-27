@@ -26,6 +26,7 @@ export class MeuspedidosComponent {
   carregarCardapioDoDia() {
     this.cardapioService.getCardapioDoDia().subscribe({
       next: (cardapio) => {
+        console.log(cardapio.id);
         this.cardapioDoDia = cardapio;
       },
       error: (err) => {
