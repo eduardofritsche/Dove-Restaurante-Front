@@ -129,7 +129,15 @@ export class PedidodetailsComponent {
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
-          this.router.navigate(['/funcionario/pedidos']);
+
+          if( this.loginService.hasRole('CLIENTE') ) {
+            this.router.navigate(['/cliente/pedidos']);
+            return;
+          } else {
+            this.router.navigate(['/funcionario/pedidos']);
+            return;
+          }
+          
         });
       },
       error: (erro) => console.error(erro),
