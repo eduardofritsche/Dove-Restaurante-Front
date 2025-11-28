@@ -1,0 +1,123 @@
+.ingrediente-details {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
+}
+
+/* Card principal */
+.ingrediente-details > .card {
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  overflow: hidden;
+}
+
+/* Cabeçalho do card */
+.ingrediente-details .card-header.bg-primary {
+  background: linear-gradient(90deg, #e69500, #FFA500) !important;
+  color: #fff !important;
+  padding: .9rem 1.2rem;
+
+  h5 {
+    font-weight: 700;
+    letter-spacing: .3px;
+    margin: 0;
+  }
+}
+
+/* Corpo do card */
+.ingrediente-details .card-body {
+  padding: 1.5rem 1.6rem;
+}
+
+/* Label + input */
+.ingrediente-details .form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: .35rem;
+}
+
+.ingrediente-details .form-control {
+  background: #f7f8fa;
+  color: #0b0c0f;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  padding: .55rem .8rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #FFA500;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.25);
+    background: #ffffff;
+  }
+}
+
+/* Área dos botões */
+.ingrediente-details .d-flex.justify-content-end {
+  margin-top: 1rem;
+  gap: .5rem;
+}
+
+/* Botão Cancelar */
+.ingrediente-details .btn.btn-secondary {
+  background: #f0f0f0;
+  color: #555;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.2);
+  font-weight: 500;
+  padding: .5rem 1.1rem;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .1s ease;
+
+  &:hover {
+    background: rgba(0,0,0,.05);
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(160,160,160,.4);
+  }
+}
+
+/* Botão Salvar / Cadastrar */
+.ingrediente-details .btn.btn-primary {
+  background: #FFA500;
+  color: #fff;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  font-weight: 600;
+  letter-spacing: .3px;
+  padding: .55rem 1.2rem;
+  box-shadow: 0 6px 12px rgba(255,165,0,.35);
+  transition: background-color .2s ease, box-shadow .2s ease, transform .1s ease;
+
+  &:hover {
+    background: #ffb733;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(255,165,0,.4);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,165,0,.35);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .ingrediente-details {
+    padding: 0 1rem;
+  }
+
+  .ingrediente-details .card-body {
+    padding: 1.2rem;
+  }
+
+  .ingrediente-details .btn.btn-primary,
+  .ingrediente-details .btn.btn-secondary {
+    padding-inline: 1rem;
+  }
+}

@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container cardapio-list">
   <h1>Listagem de Cardápios</h1>
   <br />
-  <button class="btn btn-primary" [routerLink]="['/admin/cardapios', 'new']">
-    Novo
+  <button class="btn btn-primary" [routerLink]="['/funcionario/cardapios', 'new']">
+    Novo Cardápio
   </button>
   <table class="table table-striped">
     <thead>
@@ -32,7 +32,7 @@
           <button
             type="button"
             class="btn btn-info me-2"
-            [routerLink]="['/admin/cardapios/edit', cardapio.id]"
+            [routerLink]="['/funcionario/cardapios/edit', cardapio.id]"
           >
             Editar
           </button>

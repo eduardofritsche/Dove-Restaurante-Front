@@ -8,7 +8,8 @@ import { CardapioService } from '../../../services/cardapio.service';
 import { IngredienteService } from '../../../services/ingrediente.service';
 import { Cardapio } from '../../../models/cardapio';
 import { Ingrediente } from '../../../models/ingrediente';
-import { AuthService } from '../../../services/auth.service';
+import { Usuario } from '../../../models/usuario';
+import { LoginService } from '../../../auth/login.service';
 
 @Component({
   selector: 'app-pedidodetails',
@@ -23,9 +24,9 @@ export class PedidodetailsComponent {
   pedidoService = inject(PedidoService);
   cardapioService = inject(CardapioService);
   ingredienteService = inject(IngredienteService);
-  authService = inject(AuthService);
   activedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  loginService = inject(LoginService);
 
   constructor() {
     const id = this.activedRoute.snapshot.params['id'];
@@ -34,23 +35,22 @@ export class PedidodetailsComponent {
     } else {
       // cadastro novo
       this.prepareNewPedido();
+      this.vincularClienteLogado();
+    }
+  }
+
+  private vincularClienteLogado() {
+     try {
+      const usuarioLogado: Usuario = this.loginService.getUsuarioLogado();
+      this.pedido.usuario = usuarioLogado;
+    } catch (error) {
+      console.error('Erro ao vincular usuário logado como cliente.', error);
     }
   }
 
   private prepareNewPedido() {
     // status padrão
     this.pedido.status = 'PREPARANDO';
-
-    // pegar usuário autenticado
-    const user = this.authService.getUser();
-
-    if (this.authService.isCliente() && user && 'email' in user) {
-      // Garantimos que é Cliente
-      this.pedido.cliente = user;
-    } else if (this.authService.isFuncionario() && user && 'cpf' in user) {
-      // Garantimos que é Funcionário
-      this.pedido.funcionario = user;
-    }
 
     // pegar cardápio do dia
     this.cardapioService.getCardapioDoDia().subscribe({
@@ -129,13 +129,15 @@ export class PedidodetailsComponent {
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then(() => {
-          if (this.authService.isFuncionario()) {
-            this.router.navigate(['/admin/pedidos']);
-          } else if (this.authService.isCliente()) {
+
+          if( this.loginService.hasRole('CLIENTE') ) {
             this.router.navigate(['/cliente/pedidos']);
+            return;
           } else {
-            this.router.navigate(['/']);
+            this.router.navigate(['/funcionario/pedidos']);
+            return;
           }
+          
         });
       },
       error: (erro) => console.error(erro),

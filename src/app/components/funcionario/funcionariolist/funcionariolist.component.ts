@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
-import { FuncionarioService } from '../../../services/funcionario.service';
-import { Funcionario } from '../../../models/funcionario';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../models/usuario';
 
 @Component({
   selector: 'app-funcionariolist',
@@ -12,19 +12,24 @@ import { Funcionario } from '../../../models/funcionario';
   styleUrl: './funcionariolist.component.scss',
 })
 export class FuncionariolistComponent {
-  funcionarioService = inject(FuncionarioService);
-  funcionarios: Funcionario[] = [];
+  usuarioService = inject(UsuarioService);
+  funcionarios: Usuario[] = [];
 
   relatorio: any | null = null; // guarda o relatório carregado
 
   ngOnInit(): void {
     this.findAll();
   }
-
+  
   findAll() {
-    this.funcionarioService.findAll().subscribe({
-      next: (funcionarios) => {
-        this.funcionarios = funcionarios.sort((a, b) => (b.id || 0) - (a.id || 0));
+    this.usuarioService.findAll().subscribe({
+      next: (usuarios) => {
+        const funcionariosFiltrados = usuarios.filter(
+          (usuario) => usuario.tipo === 'FUNCIONARIO'
+        );
+        this.funcionarios = funcionariosFiltrados.sort(
+          (a, b) => (b.id || 0) - (a.id || 0)
+        );
       },
       error: (error) => {
         console.error(error);
@@ -32,7 +37,7 @@ export class FuncionariolistComponent {
     });
   }
 
-  deletar(funcionario: Funcionario) {
+  deletar(funcionario: Usuario) {
     Swal.fire({
       title: 'Você tem certeza que deseja deletar este funcionário?',
       icon: 'warning',
@@ -42,7 +47,7 @@ export class FuncionariolistComponent {
       denyButtonText: 'Não',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.funcionarioService.delete(funcionario.id!).subscribe({
+        this.usuarioService.delete(funcionario.id!).subscribe({
           next: () => {
             this.findAll();
             Swal.fire({
@@ -63,8 +68,8 @@ export class FuncionariolistComponent {
     });
   }
 
-  abrirRelatorio(funcionario: Funcionario): void {
-    this.funcionarioService.getRelatorio(funcionario.id!).subscribe({
+  abrirRelatorio(funcionario: Usuario): void {
+    this.usuarioService.getRelatorio(funcionario.id!).subscribe({
       next: (data) => {
         // converte strings "HH:mm:ss" em objetos Date
         data.pedidos.forEach((p: any) => {

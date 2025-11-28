@@ -8,8 +8,9 @@
     overflow: hidden;
   }
 
+
   .card-header {
-    background: linear-gradient(90deg, #0d6efd, #0a58ca);
+    background: linear-gradient(90deg, #FFA500, #FFA500);
     color: white;
     padding: 15px;
     border-bottom: none;
@@ -120,14 +121,21 @@
   gap: 6px;
 
   // deixa o estilo mais suave para o danger
-  background-color: #dc3545;
+  background-color: #FFA500;
   border: none;
 
   transition: background-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #bb2d3b;
+    background-color: hsl(0, 0%, 100%);
     transform: scale(1.05);
+    color: #FFA500;
   }
+}
+
+.badge {
+  background-color: #fff !important;  // fundo branco
+  color: #FFA500 !important;          // texto laranja
+  border: 1px solid #FFA500;          // borda laranja para destacar
 }
 

@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 
 // Imports dos componentes de login e cadastro
-import { LoginClienteComponent } from './components/layout/logincliente/logincliente.component';
-import { LoginfuncionarioComponent } from './components/layout/loginfuncionario/loginfuncionario.component';
+import { LoginComponent } from './components/layout/login/login.component';
 import { CadastroclienteComponent } from './components/layout/cadastrocliente/cadastrocliente.component';
 import { LandingpageComponent }  from './components/layout/landingpage/landingpage.component';
 import { TrocarSenhaComponent } from './components/cliente/trocarsenha/trocarsenha.component';
@@ -21,6 +20,7 @@ import { FuncionarioDetailsComponent } from './components/funcionario/funcionari
 import { FuncionarioRelatorioComponent } from './components/funcionario/funcionario-relatorio/funcionario-relatorio.component';
 import { IngredientelistComponent } from './components/ingrediente/ingredientelist/ingredientelist.component';
 import { IngredienteDetailsComponent } from './components/ingrediente/ingredientedetails/ingredientedetails.component';
+import { loginGuardAdmin, loginGuardFuncionario } from './auth/login.guard';
 
 export const routes: Routes = [
   // Rota padrão → Landing page
@@ -28,8 +28,8 @@ export const routes: Routes = [
 
   { path: 'landing-page', component: LandingpageComponent },
   // 🔹 Login / Cadastro
-  { path: 'login-cliente', component: LoginClienteComponent },
-  { path: 'login-funcionario', component: LoginfuncionarioComponent },
+  { path: 'login', component: LoginComponent },
+  //{ path: 'login-cliente', component: LoginClienteComponent },
   { path: 'cadastro-cliente', component: CadastroclienteComponent },
 
   // Layout principal
@@ -38,30 +38,51 @@ export const routes: Routes = [
     component: PrincipalComponent,
     children: [
       // Área do cliente
-      { path: 'cliente/pedidos', component: MeuspedidosComponent },
-      { path: 'cliente/pedidos/new', component: PedidodetailsComponent },
-      { path: 'cliente/pedidos/edit/:id', component: PedidodetailsComponent },
-      { path: 'cliente/perfil', component: PerfilclienteComponent },
-      { path: 'cliente/senha', component: TrocarSenhaComponent },
+      { 
+        path: 'cliente',
+        children: [
+          { path: 'pedidos', component: MeuspedidosComponent },
+          { path: 'pedidos/new', component: PedidodetailsComponent },
+          { path: 'pedidos/edit/:id', component: PedidodetailsComponent },
+          { path: 'perfil', component: PerfilclienteComponent },
+          { path: 'senha', component: TrocarSenhaComponent },
+        ]
+      },
+      // Área do admin
+      { 
+        path: 'admin',
+        canActivate: [loginGuardAdmin],
+        children: [
+          { path: 'funcionarios', component: FuncionariolistComponent },
+          { path: 'funcionarios/new', component: FuncionarioDetailsComponent },
+          { path: 'funcionarios/:id/edit', component: FuncionarioDetailsComponent },
+          { path: 'funcionarios/:id/relatorio', component: FuncionarioRelatorioComponent },
+        ]
+      },
+      // Área do funcionario
+      { 
+        path: 'funcionario',
+        canActivate: [loginGuardFuncionario],
+        children: [
+          { path: 'cardapios', component: CardapiolistComponent },
+          { path: 'cardapios/new', component: CardapiodetailsComponent },
+          { path: 'cardapios/edit/:id', component: CardapiodetailsComponent },
+          { path: 'pedidos', component: PedidolistComponent },
+          { path: 'pedidos/new', component: PedidodetailsComponent },
+          { path: 'pedidos/edit/:id', component: PedidodetailsComponent },
+          { path: 'ingredientes', component: IngredientelistComponent },
+          { path: 'ingredientes/new', component: IngredienteDetailsComponent },
+          { path: 'ingredientes/:id/edit', component: IngredienteDetailsComponent },
+        ]
+      },
 
       // Área do funcionário (admin)
       // { path: 'admin/clientes', component: ClientelistComponent },
-      { path: 'admin/funcionarios', component: FuncionariolistComponent },
-      { path: 'admin/funcionarios/new', component: FuncionarioDetailsComponent },
-      { path: 'admin/funcionarios/:id/edit', component: FuncionarioDetailsComponent },
-      { path: 'admin/funcionarios/:id/relatorio', component: FuncionarioRelatorioComponent },
-      { path: 'admin/cardapios', component: CardapiolistComponent },
-      { path: 'admin/cardapios/new', component: CardapiodetailsComponent },
-      { path: 'admin/cardapios/edit/:id', component: CardapiodetailsComponent },
-      { path: 'admin/pedidos', component: PedidolistComponent },
-      { path: 'admin/pedidos/new', component: PedidodetailsComponent },
-      { path: 'admin/pedidos/edit/:id', component: PedidodetailsComponent },
-      { path: 'admin/ingredientes', component: IngredientelistComponent },
-      { path: 'admin/ingredientes/new', component: IngredienteDetailsComponent },
-      { path: 'admin/ingredientes/:id/edit', component: IngredienteDetailsComponent },
+      
+      
 
       // Redirecionamento padrão dentro do layout
-      { path: '', redirectTo: 'login-cliente', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
   // 🔹 Rota coringa → redireciona

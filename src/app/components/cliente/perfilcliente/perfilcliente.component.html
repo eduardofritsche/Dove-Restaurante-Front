@@ -1,1 +1,26 @@
-<p>perfilcliente works!</p>
+<div class="container perfil-container">
+  <div class="card shadow perfil-card">
+    <div class="card-body">
+
+       <h3 class="text-center mb-4 perfil-title">Perfil do Cliente</h3>
+
+      <!-- Nome -->
+      <div class="perfil-item">
+        <label>Nome</label>
+        <span>{{ cliente?.nome }}</span>
+      </div>
+
+      <!-- Email -->
+      <div class="perfil-item">
+        <label>E-mail</label>
+        <span>{{ cliente?.email }}</span>
+      </div>
+
+      <!-- Botão Trocar Senha -->
+      <button class="btn btn-primary btn-trocar-senha" (click)="abrirTrocarSenha()">
+        Trocar Senha
+      </button>
+
+    </div>
+  </div>
+</div>

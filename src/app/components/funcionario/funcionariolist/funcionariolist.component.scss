@@ -1,0 +1,390 @@
+
+$accent: #FFA500 !default;
+$accent-600: mix(black, $accent, 12%);
+$accent-700: mix(black, $accent, 22%);
+
+$bg: #0b0c0f !default;
+$surface: #111318 !default;
+$soft-surface: #141821 !default;
+$text: rgba(255,255,255,0.92) !default;
+$muted: rgba(255,255,255,0.64) !default;
+$border: rgba(255,255,255,0.08) !default;
+$overlay: rgba(14,16,20,0.55) !default;
+
+$radius: 16px !default;
+$radius-sm: 10px !default;
+$radius-lg: 22px !default;
+$pad: 16px !default;
+$gap: 14px !default;
+
+$font-sans: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, 'Helvetica Neue', Arial, 'Noto Sans';
+
+$shadow-1: 0 6px 16px rgba(0,0,0,0.25);
+$shadow-2: 0 12px 30px rgba(0,0,0,0.35);
+
+@mixin focus-ring($c: $accent) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba($c, 0.32);
+  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+
+html, body {
+  background: $bg;
+  color: $text;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Navbar degradê branco → laranja
+.navbar.bg-primary[data-mdb-theme="dark"] {
+  background: linear-gradient(90deg, #ffffff 0%, #fff2cc 35%, $accent 100%) !important;
+  border-bottom: none;
+  color: #fff;
+
+  .navbar-brand, .navbar-toggler { color: #fff !important; }
+
+  // ----- Brand ("Restaurante Dove") estilizada
+  .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .35rem .7rem;
+    border-radius: $radius-sm;
+    font-weight: 800;
+    letter-spacing: .3px;
+    text-transform: none;
+    background: linear-gradient(90deg, #fff, rgba(255,255,255,0.85));
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform .15s ease, background-color .2s ease, box-shadow .2s ease;
+
+    &:hover { transform: translateY(-1px); text-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+  }
+
+  .nav-link {
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: $radius-sm;
+    margin-left: 1.2rem;
+    padding: .4rem .8rem;
+    transition: all .2s ease;
+    &:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #fff;
+    }
+    &:focus { @include focus-ring(white); }
+  }
+
+  // Botão Sair e demais botões
+  .btn-outline-danger,
+  .nav-link[href*="funcionarios"],
+  .nav-link[href*="cardapios"],
+  .nav-link[href*="pedidos"],
+  .nav-link[href*="ingredientes"] {
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: $radius-sm;
+    color: white !important;
+    background: transparent;
+    font-weight: 600;
+    &:hover {
+      background: white !important;
+      color: $accent !important;
+      border-color: white !important;
+    }
+    &:focus { @include focus-ring(white); }
+  }
+}
+
+// Botões gerais
+.btn {
+  border-radius: $radius-sm;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: all .2s ease;
+  gap: 1rem;
+}
+
+.btn-primary, .btn-orange, .btn btn{
+  background: #FFA500;
+  color: white;
+  border: 1px solid white;
+  &:hover { background: rgba(255,255,255,0.85); color: $accent-700; }
+  &:focus { @include focus-ring(white); }
+}
+
+.btn-outline-primary, .btn-outline-orange {
+  background: transparent; color: white; border-color: white;
+  &:hover { background: white; color: $accent; }
+  &:focus { @include focus-ring(white); }
+}
+
+.form-control, .form-select, .form-check-input {
+  background: $soft-surface;
+  color: $text;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  &:focus { border-color: rgba($accent,.7); @include focus-ring($accent); }
+}
+
+.table {
+  color: $text;
+  th, td { border-color: $border !important; }
+  thead th { color: $muted; font-weight: 600; text-transform: uppercase; font-size: .78rem; }
+}
+
+.badge, .chip {
+  background: rgba($accent, .14);
+  color: $accent;
+  border: 1px solid rgba($accent,.35);
+  border-radius: 999px;
+}
+
+.footer-minimal { color: $muted; border-top: 1px solid $border; padding: $pad 0; }
+
+:root[data-theme="light"] {
+  --bg: #f7f8fb; --surface: #ffffff; --soft-surface: #f3f5f9; --text: #0b0c0f; --muted: rgba(11,12,15,.64); --border: rgba(11,12,15,.08);
+}
+
+// ==============================
+// Página: Listagem de Funcionários
+// HTML base mantido (sem alterar estrutura)
+// ==============================
+
+// Título
+.container > h1 {
+  font-weight: 800;
+  letter-spacing: .2px;
+  margin-top: .5rem;
+  margin-bottom: .25rem;
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+  // sublinhado sutil na cor da marca
+  &::after {
+    content: ""; position: absolute; left: 0; right: -6px; bottom: -8px; height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,.85), $accent);
+    border-radius: 2px;
+  }
+}
+
+// Botão "Novo Funcionário" segue o padrão de botões brancos
+.container > .btn.btn-primary {
+  margin-top: 3.5rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+
+// Tabela
+.table.table-striped {
+  --row-hover: rgba(255,255,255,.03);
+  --row-stripe: rgba(255,255,255,.015);
+
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: $radius;
+  overflow: hidden; // mantém cantos arredondados
+  box-shadow: $shadow-1;
+
+  thead th {
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    color: $muted;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .78rem;
+    letter-spacing: .04em;
+    border-bottom-color: $border !important;
+    position: sticky; top: 0; // cabeçalho sempre visível se a tabela estiver rolando
+    z-index: 1;
+  }
+
+  tbody tr:nth-of-type(odd) { background: var(--row-stripe); }
+  tbody tr:hover { background: var(--row-hover); }
+
+  tbody td {
+    vertical-align: middle;
+    border-top-color: $border !important;
+  }
+
+  // realce lateral ao passar o mouse
+  tbody tr {
+    transition: background-color .15s ease, box-shadow .15s ease;
+    &:hover { box-shadow: inset 3px 0 0 0 $accent; }
+  }
+}
+
+// Ações (mantém markup, harmoniza estilos)
+.table .btn {
+  padding: .38rem .7rem;
+  border-radius: $radius-sm;
+}
+
+// Convertemos info/success para o estilo da marca (botões brancos + laranja)
+.btn-info, .btn-success {
+  background: #FFA500 !important;
+  color: white !important;
+  border: 1px solid white !important;
+  box-shadow: none;
+  text-shadow: none;
+  &:hover { background: rgba(255,255,255,.88) !important; color: $accent-700 !important; }
+  &:focus { @include focus-ring(white); }
+  box-shadow: none;
+  text-shadow: none;
+}
+
+// Perigo mantido, mas com melhor foco/hover
+.btn-danger {
+  border: 1px solid transparent;
+  &:hover { background: rgba(255,255,255,.88) !important; color: red !important; }
+  &:focus { @include focus-ring(white); }
+}
+
+// Cartão do Relatório
+.card {
+  .card-body h5 { font-weight: 700; }
+  .list-group-item {
+    background: transparent; color: $text; border-color: $border;
+    &:hover { background: rgba(255,255,255,.02); }
+  }
+}
+
+// Botão "Fechar Relatório"
+.btn.btn-outline-secondary {
+  color: $muted;
+  border-color: $border;
+  background: transparent;
+  &:hover { background: rgba(255,255,255,.06); color: $text; border-color: $border; }
+  &:focus { @include focus-ring($accent); }
+}
+
+// Responsividade leve
+@media (max-width: 576px) {
+  .table { font-size: .92rem; }
+  .table .btn { padding: .34rem .6rem; }
+}
+
+// Correção de contraste da tabela de Funcionários
+.table.table-striped {
+  color: #0b0c0f !important; // texto escuro
+  background: #ffffff !important; // fundo branco
+}
+
+.table.table-striped th,
+.table.table-striped td {
+  color: #0b0c0f !important; // texto preto para visibilidade
+  background-color: #ffffff !important;
+}
+
+// ==============================
+.mt-4 > .card .card-body {
+padding: 1.25rem 1.25rem 1rem;
+}
+
+
+// Título do relatório
+.mt-4 > .card .card-body h5 {
+display: inline-block;
+font-weight: 800;
+letter-spacing: .2px;
+margin-bottom: .75rem;
+position: relative;
+color: #0b0c0f;
+}
+.mt-4 > .card .card-body h5::after {
+content: ""; position: absolute; left: 0; right: -6px; bottom: -8px; height: 3px;
+background: linear-gradient(90deg, $accent, mix(white,$accent,60%));
+border-radius: 2px;
+}
+
+
+// Linhas-resumo (Funcionário / Total de pedidos)
+.mt-4 > .card .card-body p {
+margin-bottom: .35rem;
+color: #3b3b3b;
+}
+.mt-4 > .card .card-body p strong { color: #0b0c0f; }
+
+
+// Lista de pedidos
+.mt-4 .list-group {
+margin-top: .9rem;
+border-radius: $radius;
+overflow: hidden;
+border-color: rgba(0,0,0,.06);
+}
+
+
+.mt-4 .list-group-item {
+background: #ffffff;
+color: #0b0c0f;
+border-color: rgba(0,0,0,.06);
+padding: .9rem 1rem;
+display: grid;
+grid-template-columns: 1.1fr .9fr .9fr .9fr; // Pedido | Status | Início | Fim
+gap: .75rem;
+align-items: center;
+transition: background-color .15s ease, box-shadow .15s ease;
+}
+
+
+.mt-4 .list-group-item strong { font-weight: 700; }
+
+
+// Listras e hover com faixa lateral laranja
+.mt-4 .list-group-item:nth-child(odd) { background: #fffaf1; }
+.mt-4 .list-group-item:hover { background: #fff4e0; box-shadow: inset 3px 0 0 0 $accent; }
+
+
+// Responsivo: empilha campos no mobile
+@media (max-width: 768px) {
+.mt-4 .list-group-item {
+grid-template-columns: 1fr;
+gap: .25rem;
+padding: .85rem .9rem;
+}
+}
+
+
+// Botão Fechar Relatório (neutro, mas com foco acessível)
+.mt-4 .btn.btn-outline-secondary {
+color: #3b3b3b;
+border-color: rgba(0,0,0,.12);
+background: transparent;
+&:hover { background: rgba(0,0,0,.05); color: #0b0c0f; border-color: rgba(0,0,0,.18); }
+&:focus { @include focus-ring($accent); }
+}
+
+
+// OPCIONAL (caso você envolva o texto do status com <span class="badge status">...)
+.status.badge {
+background: rgba($accent,.14);
+color: $accent;
+border: 1px solid rgba($accent,.35);
+border-radius: 999px;
+padding: .28rem .55rem;
+font-weight: 600;
+}
+
+
+
+// Espaçamento entre os botões de ação na listagem
+.table .btn {
+  margin-right: 0.6rem; // espaçamento lateral entre botões
+}
+
+.table td:last-child .btn:last-child {
+  margin-right: 0; // remove margem do último botão da célula
+}
+
+
+/* Fundo com degradê branco → laranja suave */
+.login-background {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff, #ffe7c2, #ffc166);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+} 
+

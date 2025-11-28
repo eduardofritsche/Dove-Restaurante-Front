@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { AuthService } from '../../../services/auth.service';
 
 type Regras = {
   minLen: boolean;
@@ -23,80 +22,62 @@ type Regras = {
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './trocarsenha.component.html',
+  styleUrls: ['./trocarsenha.component.scss'],
 })
 export class TrocarSenhaComponent implements OnInit {
-  /** Caso queira receber o id do pai, mantenha @Input; senão, pegamos do AuthService/rota */
-  clienteId?: number;
 
-  // Campos do formulário
+  usuarioId?: number;
+
   senhaAtual = '';
   novaSenha = '';
   confirmarSenha = '';
 
-  // UI
   mostrarAtual = false;
   mostrarNova = false;
   mostrarConfirm = false;
   submitted = false;
   loading = false;
 
-  // Força da senha
   regras: Regras = { minLen: false, upper: false, lower: false, number: false, special: false };
   rotuloForca = 'Fraca';
   classeForca = 'text-danger';
 
-  /** Ajuste se usar environment.apiUrl */
-  private readonly API = '/api/cliente'; // seu back está em singular e usa /senha/{id}
+  // API CORRETA
+  private readonly API = '/api/usuario';
 
-  // Injeções
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
-  private auth = inject(AuthService);
 
   ngOnInit(): void {
-    // 1) Tenta pelo AuthService (login salvou o usuário com id)
-    const authId = this.auth.getUserId?.() ?? null;
-    if (authId) {
-      this.clienteId = authId;
-      // console.log('[TrocarSenha] id via AuthService =', this.clienteId);
-      return;
-    }
-
-    // 2) Tenta pela rota (/.../:id/...)
+    // Pega ID da rota
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
-      this.clienteId = Number(idParam);
-      // console.log('[TrocarSenha] id via rota =', this.clienteId);
+      this.usuarioId = Number(idParam);
       return;
     }
 
-    // 3) Tenta recuperar do localStorage (caso o AuthService use outra key)
+    // Pega ID do token decodificado
     try {
-      const raw = localStorage.getItem('app.user');
+      const raw = localStorage.getItem('token');
       if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed?.id) {
-          this.clienteId = Number(parsed.id);
-          // console.log('[TrocarSenha] id via localStorage =', this.clienteId);
+        const token = JSON.parse(atob(raw.split('.')[1])); // decodifica payload
+        if (token?.id) {
+          this.usuarioId = Number(token.id);
           return;
         }
       }
-    } catch {
-      // ignore
-    }
+    } catch {}
 
-    // Se nada funcionou, avise e mantenha botão inoperante
     Swal.fire({
-      title: 'Não foi possível identificar o cliente (id ausente).',
+      title: 'Não foi possível identificar o usuário.',
       icon: 'error',
       confirmButtonText: 'OK',
     });
   }
 
-  /** Habilita o botão quando tudo estiver ok */
   podeSalvar(): boolean {
     return (
-      !!this.clienteId &&
+      !!this.usuarioId &&
       !!this.senhaAtual &&
       !!this.novaSenha &&
       !!this.confirmarSenha &&
@@ -105,22 +86,20 @@ export class TrocarSenhaComponent implements OnInit {
     );
   }
 
-  /** Nova senha === confirmação */
   senhasConferem(): boolean {
     return this.novaSenha.length > 0 && this.novaSenha === this.confirmarSenha;
   }
 
-  /** Defina seu mínimo: 8+ e pelo menos 3 classes de caracteres */
   atendeRegrasMinimas(): boolean {
     const classes =
       Number(this.regras.upper) +
       Number(this.regras.lower) +
       Number(this.regras.number) +
       Number(this.regras.special);
+
     return this.regras.minLen && classes >= 3;
   }
 
-  /** Recalcula força da senha conforme digita */
   calcularForca(): void {
     const s = this.novaSenha ?? '';
     this.regras = {
@@ -150,31 +129,27 @@ export class TrocarSenhaComponent implements OnInit {
     }
   }
 
-  /** Envia JSON no corpo para PUT /api/cliente/senha/{id} */
+  voltarParaPerfil() {
+    window.history.back();
+  }
+
   trocarSenha(): void {
     this.submitted = true;
 
-    if (!this.clienteId) {
-      Swal.fire({
-        title: 'Não foi possível identificar o cliente (id ausente).',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+    if (!this.usuarioId) {
+      Swal.fire({ title: 'Usuário não identificado.', icon: 'error', confirmButtonText: 'OK' });
       return;
     }
 
     if (!this.podeSalvar()) {
-      Swal.fire({
-        title: 'Preencha os campos corretamente antes de salvar.',
-        icon: 'warning',
-        confirmButtonText: 'OK',
-      });
+      Swal.fire({ title: 'Preencha tudo corretamente.', icon: 'warning', confirmButtonText: 'OK' });
       return;
     }
 
     this.loading = true;
 
-    const url = `${this.API}/senha/${this.clienteId}`; // /senha/{id}
+    // Agora usando /usuario/senha/{id}
+    const url = `${this.API}/senha/${this.usuarioId}`;
     const body = {
       senhaAtual: this.senhaAtual.trim(),
       novaSenha: this.novaSenha.trim(),
@@ -184,12 +159,7 @@ export class TrocarSenhaComponent implements OnInit {
     this.http.put<void>(url, body).subscribe({
       next: () => {
         this.loading = false;
-        Swal.fire({
-          title: 'Senha alterada com sucesso.',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        });
-        // Limpar campos
+        Swal.fire({ title: 'Senha alterada!', icon: 'success', confirmButtonText: 'OK' });
         this.senhaAtual = '';
         this.novaSenha = '';
         this.confirmarSenha = '';
@@ -204,22 +174,11 @@ export class TrocarSenhaComponent implements OnInit {
           return;
         }
         if (err.status === 404) {
-          Swal.fire({ title: 'Cliente não encontrado.', icon: 'error', confirmButtonText: 'OK' });
+          Swal.fire({ title: 'Usuário não encontrado.', icon: 'error', confirmButtonText: 'OK' });
           return;
         }
-        if (err.status === 400) {
-          const msg =
-            (err.error && (err.error.message || err.error.error)) ||
-            'Requisição inválida. Verifique os campos.';
-          Swal.fire({ title: msg, icon: 'error', confirmButtonText: 'OK' });
-          return;
-        }
-        if (err.status === 415) {
-          Swal.fire({ title: 'Formato não suportado (415). Envie application/json.', icon: 'error', confirmButtonText: 'OK' });
-          return;
-        }
-        Swal.fire({ title: 'Erro ao alterar a senha. Tente novamente.', icon: 'error', confirmButtonText: 'OK' });
-        // console.error('Erro trocarSenha:', err);
+
+        Swal.fire({ title: 'Erro ao alterar senha.', icon: 'error', confirmButtonText: 'OK' });
       },
     });
   }

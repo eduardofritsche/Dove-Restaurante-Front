@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container pedido-list">
   <h1>Listagem de Pedidos</h1>
   <br />
   <button
     class="btn btn-primary"
-    [routerLink]="['/admin/pedidos', 'new']"
+    [routerLink]="['/funcionario/pedidos', 'new']"
     [disabled]="!cardapioDoDia"
   >
     Novo Pedido
@@ -17,8 +17,7 @@
         <th>Status</th>
         <th>Hora Início</th>
         <th>Hora Fim</th>
-        <th>Cliente</th>
-        <th>Funcionário</th>
+        <th>Usuário</th>
         <th>Cardápio</th>
         <th>Ações</th>
       </tr>
@@ -33,20 +32,10 @@
         <td>{{ pedido.status }} {{ getStatusIcon(pedido) }}</td>
         <td>{{ pedido.hora_inicio }}</td>
         <td>{{ pedido.hora_fim }}</td>
-        <td>{{ pedido.cliente?.nome }}</td>
-        <td>{{ pedido.funcionario?.nome }}</td>
+        <td>{{ pedido.usuario.nome }}</td>
         <td>{{ pedido.cardapio.data }}</td>
 
         <td>
-          <!-- Botão Editar -->
-          <button
-            class="btn btn-info me-2"
-            [routerLink]="['/admin/pedidos/edit', pedido.id]"
-            [disabled]="!podeEditar(pedido)"
-          >
-            Editar
-          </button>
-
           <!-- Botão Pronto -->
           <button
             type="button"
@@ -55,6 +44,15 @@
             (click)="markAsPronto(pedido)"
           >
             Pronto
+          </button>
+
+          <!-- Botão Editar -->
+          <button
+            class="btn btn-info me-2"
+            [routerLink]="['/funcionario/pedidos/edit', pedido.id]"
+            [disabled]="!podeEditar(pedido)"
+          >
+            Editar
           </button>
 
           <!-- Botão Excluir -->

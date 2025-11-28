@@ -1,7 +1,6 @@
 import { Cardapio } from './cardapio';
-import { Funcionario } from './funcionario';
-import { Cliente } from './cliente';
 import { Ingrediente } from './ingrediente';
+import { Usuario } from './usuario';
 
 export class Pedido {
   id!: number;
@@ -10,9 +9,6 @@ export class Pedido {
   hora_inicio!: string;
   hora_fim!: string;
   cardapio!: Cardapio;
-  // funcionario!: Funcionario;
-  // cliente!: Cliente;
-  funcionario?: Funcionario | null;
-  cliente?: Cliente | null;
+  usuario!: Usuario;
   ingredientes: Ingrediente[] = [];
 }
