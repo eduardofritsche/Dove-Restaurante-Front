@@ -15,7 +15,7 @@ export class PerfilclienteComponent implements OnInit {
   loginService = inject(LoginService);
   http = inject(HttpClient);
 
-  API = "http://localhost:8080/api/usuarios";
+  API = "http://localhost:8080/api/usuario";
 
   ngOnInit() {
     const usuario = this.loginService.getUsuarioLogado() as Usuario;

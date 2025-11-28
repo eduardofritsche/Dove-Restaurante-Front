@@ -7,7 +7,7 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root',
 })
 export class UsuarioService {
-  API = 'http://localhost:8080/api/usuarios';
+  API = 'http://localhost:8080/api/usuario';
 
   http = inject(HttpClient);
 
