@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Pedido } from '../models/pedido';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
   http = inject(HttpClient);
-  API = '/api/pedidos';
+  API = `${environment.SERVIDOR}/api/pedidos`;
 
   findAll(): Observable<Pedido[]> {
     return this.http.get<Pedido[]>(this.API);
