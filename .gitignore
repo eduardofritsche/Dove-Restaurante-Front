@@ -41,3 +41,8 @@ testem.log
 .DS_Store
 Thumbs.db
 angular.json
+ENVIRONMENT_CONFIG.md
+package-lock.json
+package-lock.json
+src/environments/environment.development.ts
+src/environments/environment.ts

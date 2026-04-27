@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
 import { LoginService } from '../../../auth/login.service';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'perfil-cliente',
   templateUrl: './perfilcliente.component.html',
@@ -15,7 +15,7 @@ export class PerfilclienteComponent implements OnInit {
   loginService = inject(LoginService);
   http = inject(HttpClient);
 
-  API = "http://localhost:8080/api/usuario";
+  API = `${environment.apiUrl}/api/usuario`;
 
   ngOnInit() {
     const usuario = this.loginService.getUsuarioLogado() as Usuario;
