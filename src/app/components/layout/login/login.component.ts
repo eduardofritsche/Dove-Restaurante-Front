@@ -34,14 +34,12 @@ export class LoginComponent {
           if (token) {
             this.loginService.addToken(token);
 
-            const usuarioLogado = this.loginService.getUsuarioLogado();
+            const userRole = this.loginService.getUserRole();
 
             this.gerarToast().fire({
               icon: 'success',
               title: 'Seja bem-vindo!',
             });
-
-            const userRole = usuarioLogado.tipo;
 
             if (userRole === 'FUNCIONARIO' || userRole === 'ADMIN') {
               this.router.navigate(['/funcionario/pedidos']);

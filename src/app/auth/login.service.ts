@@ -35,24 +35,31 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  jwtDecode() {
+  jwtDecode(): any {
     let token = this.getToken();
     if (token) {
-      return jwtDecode<JwtPayload>(token);
+      return jwtDecode(token);
     }
     return "";
   }
 
-  hasRole(role: string) {
-    let user = this.jwtDecode() as Usuario;
-    if (user.tipo == role)
-      return true;
-    else
-      return false;
+  hasRole(role: string): boolean {
+    const payload = this.jwtDecode();
+    if (payload && payload.realm_access && payload.realm_access.roles) {
+      return payload.realm_access.roles.includes(role);
+    }
+    return false;
   }
   
-  getUsuarioLogado() {
-    return this.jwtDecode() as Usuario;
+  getUsuarioLogado(): any {
+    return this.jwtDecode();
+  }
+
+  getUserRole(): string {
+    if (this.hasRole('dove_admin') || this.hasRole('ADMIN')) return 'ADMIN';
+    if (this.hasRole('dove_funcionario') || this.hasRole('FUNCIONARIO')) return 'FUNCIONARIO';
+    if (this.hasRole('dove_cliente') || this.hasRole('CLIENTE')) return 'CLIENTE';
+    return '';
   }
   
 
