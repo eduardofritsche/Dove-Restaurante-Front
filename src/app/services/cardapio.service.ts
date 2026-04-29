@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cardapio } from '../models/cardapio';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardapioService {
   http = inject(HttpClient);
-  API = '/api/cardapios';
+  API = `${environment.SERVIDOR}/api/cardapios`;
 
   findAll(): Observable<Cardapio[]> {
     return this.http.get<Cardapio[]>(this.API);
