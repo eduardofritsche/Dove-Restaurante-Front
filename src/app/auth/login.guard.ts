@@ -8,7 +8,7 @@ export const loginGuardAdmin: CanActivateFn = (route, state) => {
   let loginService = inject(LoginService);
   const router = inject(Router);
 
-  if (loginService.hasRole("ADMIN")) {
+  if (loginService.getUserRole() === "ADMIN") {
     return true;
   };
 
@@ -28,7 +28,8 @@ export const loginGuardFuncionario: CanActivateFn = (route, state) => {
   let loginService = inject(LoginService);
   const router = inject(Router);
 
-  if (loginService.hasRole("FUNCIONARIO") || loginService.hasRole("ADMIN")) {
+  const role = loginService.getUserRole();
+  if (role === "FUNCIONARIO" || role === "ADMIN") {
     return true;
   };
 
