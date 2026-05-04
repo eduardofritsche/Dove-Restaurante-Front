@@ -19,7 +19,6 @@ export class LoginComponent {
   mostrarSenha: boolean = false;
 
   router = inject(Router);
-
   loginService = inject(LoginService);
 
   constructor() {
@@ -34,18 +33,14 @@ export class LoginComponent {
           if (token) {
             this.loginService.addToken(token);
 
-            const usuarioLogado = this.loginService.getUsuarioLogado();
-
             this.gerarToast().fire({
               icon: 'success',
               title: 'Seja bem-vindo!',
             });
 
-            const userRole = usuarioLogado.tipo;
-
-            if (userRole === 'FUNCIONARIO' || userRole === 'ADMIN') {
+            if (this.loginService.hasRole('FUNCIONARIO') || this.loginService.hasRole('ADMIN')) {
               this.router.navigate(['/funcionario/pedidos']);
-            } else if (userRole === 'CLIENTE') {
+            } else if (this.loginService.hasRole('CLIENTE')) {
               this.router.navigate(['/cliente/pedidos']);
             } else {
               this.router.navigate(['/']);

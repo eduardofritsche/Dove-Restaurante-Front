@@ -5,7 +5,6 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import { Login } from './login';
 import { Usuario } from '../models/usuario';
 import { environment } from '../../environments/environment';
-// import { Usuario } from './usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +14,7 @@ export class LoginService {
   http = inject(HttpClient);
   API = `${environment.SERVIDOR}/api/login`;
 
-
   constructor() { }
-
 
   logar(login: Login): Observable<string> {
     return this.http.post<string>(this.API, login, {responseType: 'text' as 'json'});
@@ -44,17 +41,15 @@ export class LoginService {
   }
 
   hasRole(role: string) {
-    let user = this.jwtDecode() as Usuario;
-    if (user.tipo == role)
+    let tokenDecodificado = this.jwtDecode() as any;
+    if (tokenDecodificado?.realm_access?.roles?.includes(role)) {
       return true;
-    else
-      return false;
+    }
+    return false;
   }
   
   getUsuarioLogado() {
     return this.jwtDecode() as Usuario;
   }
-  
-
   
 }
