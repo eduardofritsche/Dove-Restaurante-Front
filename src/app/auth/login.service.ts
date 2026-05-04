@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { Login } from './login';
 import { Usuario } from '../models/usuario';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 // import { Usuario } from './usuario';
 
 @Injectable({
