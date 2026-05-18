@@ -43,11 +43,17 @@ export class LoginComponent {
             } else if (this.loginService.hasRole('CLIENTE')) {
               this.router.navigate(['/cliente/pedidos']);
             } else {
-              this.router.navigate(['/']);
+              this.loginService.removerToken();
+              this.router.navigate(['/login']);
             }
+          } else {
+            this.loginService.removerToken();
+            this.router.navigate(['/login']);
           }
         },
         error: (erro) => {
+          this.loginService.removerToken();
+          this.router.navigate(['/login']);
           Swal.fire('Usuário ou senha incorretos!', '', 'error');
         },
       });
