@@ -20,14 +20,21 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
         console.log('entrou aqui 2');
-        
+
+        // Erros vindos da própria chamada de login devem ser tratados pelo LoginComponent,
+        // não pelo interceptor. Assim evitamos navegações indesejadas (ex.: cair na landing page).
+        const isLoginRequest = request.url.includes('/api/login');
+
         if (err.status === 401) {
           console.log('401 - tratar aqui');
-          router.navigate(['/login']);
-        } else
-        if (err.status === 403) {
+          if (!isLoginRequest) {
+            router.navigate(['/login']);
+          }
+        } else if (err.status === 403) {
           console.log('403 - tratar aqui');
-          router.navigate(['/login']);
+          if (!isLoginRequest) {
+            router.navigate(['/login']);
+          }
         } else {
           console.error('HTTP error:', err);
         }
